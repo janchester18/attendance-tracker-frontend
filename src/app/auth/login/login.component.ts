@@ -15,7 +15,7 @@ export class LoginComponent {
 
   // Mock user credentials
   private mockUsers = [
-    { username: 'jonapogs', password: '1234' },
+    { username: '', password: '' },
     { username: 'user', password: 'user123' },
   ];
 
