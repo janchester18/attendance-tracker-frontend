@@ -1,0 +1,47 @@
+<main class="login-group">
+  <div class="slogotxt">
+    <img src="assets/RecreatedFIGMAlogo.PNG" alt="SitePhil Logo" class="logo" />
+    <div class="logotext-container">
+      <h1 class="logotxt">SITESPHIL</h1>
+      <p class="sublogotxt">COMPANY LAPTOP AND DESKTOP INVENTORY SYSTEM</p>
+    </div>
+  </div>
+
+  <div class="login-container">
+    <div class="login-box">
+      <div class="avatar-container">
+        <img src="assets/avatar.png" alt="Login Avatar" class="avatarlogin" />
+        <h2 class="login" >LOGIN</h2>
+      </div>
+
+      <div class="input-group">
+        <img
+          src="assets/user.png"
+          alt="Username Icon"
+          class="usernamelogo"
+          aria-label="Username Icon"
+        />
+        <div class="divider"></div>
+        <input type="text" #usernameInput placeholder="Username" required />
+      </div>
+
+      <div class="input-group">
+        <img
+          src="assets/padlock.png"
+          alt="Password Icon"
+          class="passlogo"
+          aria-label="Password Icon"
+        />
+        <div class="divider"></div>
+        <input type="password" #passwordInput placeholder="Password" required />
+      </div>
+
+      <!-- Display error message if login fails -->
+      <div *ngIf="errorMessage" class="error">
+        {{ errorMessage }}
+      </div>
+
+      <button (click)="login()">Login</button>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,50 @@
+/* Main container to hold sidebar and content side by side */
+.main-container {
+  display: flex;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease-in-out; /* Smooth transition for content shift */
+}
+
+/* Sidebar styling */
+app-sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: #f7f7f7;
+  padding-top: 20px;
+  transition: margin-left 0.3s ease-in-out;
+  flex-shrink: 0;
+  position: fixed; /* Fix the sidebar */
+  left: -250px;   /* Hidden by default */
+  top: 0;
+  z-index: 1000;  /* Ensure sidebar is above content but below header */
+  overflow-y: auto;
+}
+
+/* Show sidebar when open */
+.main-container.sidebar-open app-sidebar {
+  left: 0; /* Slide in from the left */
+}
+
+/* Content area styling */
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  transition: margin-left 0.3s ease-in-out; /* Smooth transition for content shift */
+  background-color: #f9f9f9;
+  margin-left: 0; /* Initial position */
+}
+
+/* Shift content when sidebar is open */
+.main-container.sidebar-open .content {
+  margin-left: 250px; /* Adjust this based on your sidebar width */
+}
+
+/* Prevent content from sliding under the sidebar */
+.main-container {
+  padding-left: 250px; /* Reserve space for the sidebar */
+}
+
+/* When sidebar is closed, reset padding */
+.main-container:not(.sidebar-open) {
+  padding-left: 0;
+}
