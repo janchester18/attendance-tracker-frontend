@@ -8,13 +8,13 @@ import {
   coerceElement,
   coerceNumberProperty,
   normalizePassiveListenerOptions
-} from "./chunk-XSTGOP6A.js";
+} from "./chunk-35B23PVS.js";
 import {
   BidiModule
-} from "./chunk-VYORJ2CJ.js";
+} from "./chunk-DI5UYF4N.js";
 import {
   DOCUMENT
-} from "./chunk-BXC4AUBF.js";
+} from "./chunk-H7J5UIOM.js";
 import {
   ANIMATION_MODULE_TYPE,
   APP_ID,
@@ -93,7 +93,7 @@ import {
   ɵɵtext,
   ɵɵtextInterpolate1,
   ɵɵviewQuery
-} from "./chunk-EY26LY7S.js";
+} from "./chunk-NCXAKQQU.js";
 
 // node_modules/@angular/cdk/fesm2022/private.mjs
 var appsWithLoaders = /* @__PURE__ */ new WeakMap();
@@ -5171,6 +5171,7 @@ export {
   hasModifierKey,
   CdkObserveContent,
   ObserversModule,
+  AriaDescriber,
   FocusKeyManager,
   InteractivityChecker,
   FocusTrapFactory,
@@ -5184,4 +5185,4 @@ export {
   MatPseudoCheckboxModule,
   MatRippleLoader
 };
-//# sourceMappingURL=chunk-3BRZN5V5.js.map
+//# sourceMappingURL=chunk-C6JOT7NG.js.map

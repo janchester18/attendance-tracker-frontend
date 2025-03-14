@@ -1,0 +1,38 @@
+.attendance-container {
+  max-width: 100%;
+  padding: 20px;
+}
+
+.mat-table {
+  width: 100%;
+  background: white;
+}
+
+th {
+  font-weight: bold;
+  background-color: #f4f4f4;
+}
+
+td {
+  padding: 10px;
+}
+
+.status-present {
+  color: green;
+  font-weight: bold;
+}
+
+.status-absent {
+  color: red;
+  font-weight: bold;
+}
+
+.status-late {
+  color: orange;
+  font-weight: bold;
+}
+
+.status-leave {
+  color: blue;
+  font-weight: bold;
+}
