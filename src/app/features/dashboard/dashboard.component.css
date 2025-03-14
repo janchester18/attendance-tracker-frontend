@@ -1,0 +1,69 @@
+/* * {
+  border: solid red 1px;
+} */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f4f4;
+  height: 80vh;
+}
+
+.clock {
+  font-size: 5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+}
+
+::ng-deep .clock-in-btn {
+  background-color: #4caf50 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+::ng-deep .start-break-btn {
+  background-color: #ff9800 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+::ng-deep .end-break-btn {
+  background-color: #2196f3 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+::ng-deep .clock-out-btn {
+  background-color: #f44336 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+@media screen and (max-width: 768px) {
+  .clock {
+    font-size: 3rem;
+  }
+  .buttons {
+    flex-direction: column;
+  }
+}
