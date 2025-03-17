@@ -6,10 +6,10 @@ import {
   SPACE,
   _CdkPrivateStyleLoader,
   _StructuralStylesLoader
-} from "./chunk-C6JOT7NG.js";
-import "./chunk-35B23PVS.js";
-import "./chunk-DI5UYF4N.js";
-import "./chunk-H7J5UIOM.js";
+} from "./chunk-IGKOWSEY.js";
+import "./chunk-TIJ4DQDB.js";
+import "./chunk-R3IBUC5M.js";
+import "./chunk-3SE5A5SN.js";
 import {
   ANIMATION_MODULE_TYPE,
   ChangeDetectionStrategy,
@@ -25,13 +25,10 @@ import {
   NgModule,
   Optional,
   Output,
-  ReplaySubject,
   SkipSelf,
-  Subject,
   ViewEncapsulation,
   booleanAttribute,
   inject,
-  merge,
   setClassMetadata,
   signal,
   ɵɵNgOnChangesFeature,
@@ -53,7 +50,12 @@ import {
   ɵɵprojection,
   ɵɵprojectionDef,
   ɵɵtemplate
-} from "./chunk-NCXAKQQU.js";
+} from "./chunk-Q6DORZVQ.js";
+import {
+  ReplaySubject,
+  Subject,
+  merge
+} from "./chunk-S35MAB2V.js";
 
 // node_modules/@angular/material/fesm2022/sort.mjs
 var _c0 = ["mat-sort-header", ""];

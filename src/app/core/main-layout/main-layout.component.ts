@@ -1,3 +1,4 @@
+import { FeaturesService } from './../../features/features.service';
 import { Component, HostListener  } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -7,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-layout',
@@ -19,7 +21,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatButtonModule,
     MatIconModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    SnackbarComponent
   ],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css'
@@ -33,5 +36,11 @@ export class MainLayoutComponent {
   }
   toggleSidenav() {
     // Implement sidenav toggle logic if needed
+  }
+
+  constructor(private featureService: FeaturesService) {}
+
+  onLogout() {
+    this.featureService.handleLogout();
   }
 }

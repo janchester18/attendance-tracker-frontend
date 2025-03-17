@@ -35,12 +35,13 @@
       </mat-expansion-panel> -->
 
       <a mat-list-item routerLink="/main/attendance-history"><mat-icon>history</mat-icon> <strong>Attendance History</strong></a>
-      <a mat-list-item routerLink="/"><mat-icon>logout</mat-icon> <strong>Logout</strong></a>
+      <a mat-list-item (click)="onLogout()"><mat-icon>logout</mat-icon> <strong>Logout</strong></a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content class="content">
     <router-outlet></router-outlet>
+    <app-snackbar #snackbar></app-snackbar>
   </mat-sidenav-content>
 </mat-sidenav-container>
 

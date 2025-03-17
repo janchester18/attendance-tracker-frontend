@@ -1,12 +1,6 @@
 <div class="attendance-container">
   <h2>Attendance History</h2>
-  <mat-table [dataSource]="attendanceRecords" class="mat-elevation-z8" matSort>
-
-  <!-- User Name Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-    <td mat-cell *matCellDef="let record"> {{ record.id }} </td>
-  </ng-container>
+  <mat-table [dataSource]="attendanceRecords" class="mat-table" matSort>
 
     <!-- User Name Column -->
     <ng-container matColumnDef="userName">
@@ -62,7 +56,7 @@
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
       <td mat-cell *matCellDef="let record">
-        <span [ngClass]="getStatusClass(record.status)">
+        <span>
           {{ record.status }}
         </span>
       </td>
@@ -71,4 +65,10 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </mat-table>
+  <mat-paginator
+  [length]="paginator?.length || attendanceRecords.data.length || 0"
+  [pageSize]="10"
+  [pageSizeOptions]="[2, 5, 10, 20, 30]"
+  (page)="onPageChange($event)">
+</mat-paginator>
 </div>

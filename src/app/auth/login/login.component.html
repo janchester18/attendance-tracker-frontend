@@ -3,7 +3,7 @@
     <img src="assets/RecreatedFIGMAlogo.PNG" alt="SitePhil Logo" class="logo" />
     <div class="logotext-container">
       <h1 class="logotxt">SITESPHIL</h1>
-      <p class="sublogotxt">COMPANY LAPTOP AND DESKTOP INVENTORY SYSTEM</p>
+      <p class="sublogotxt">COMPANY ATTENDANCE TRACKING SYSTEM</p>
     </div>
   </div>
 
@@ -22,8 +22,7 @@
           aria-label="Username Icon"
         />
         <div class="divider"></div>
-        <input type="text" #usernameInput placeholder="Username" required />
-      </div>
+        <input type="text" [(ngModel)]="email" placeholder="Username" required />      </div>
 
       <div class="input-group">
         <img
@@ -33,7 +32,7 @@
           aria-label="Password Icon"
         />
         <div class="divider"></div>
-        <input type="password" #passwordInput placeholder="Password" required />
+        <input type="password" [(ngModel)]="password" placeholder="Password" required />
       </div>
 
       <!-- Display error message if login fails -->
