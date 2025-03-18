@@ -1,0 +1,179 @@
+/* Details Modal Styles */
+.view-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 95%;
+  max-width: 600px;
+  background: linear-gradient(180deg, #fff, #fafafa);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+  overflow: auto;
+  max-height: 100vh;
+  height: 80%;
+}
+
+/* Show modal */
+.view-modal.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.view-modal.hide {
+  opacity: 0;
+  transform: translate(-50%, -40%) scale(0.8);
+  transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+}
+
+/* Details Content */
+.modal-content {
+  text-align: left;
+  color: #374151;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0px;
+}
+
+/* Details Groups */
+.details-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.details-group:last-child {
+  border-bottom: none;
+}
+
+.details-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #64748b;
+  min-width: 150px;
+}
+
+.details-group p {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #1e293b;
+  word-wrap: break-word;
+}
+
+/* Status Styling */
+.details-group p.approved {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.details-group p.pending {
+  color: #f59e0b;
+  font-weight: 600;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .view-modal {
+    width: 80%;
+    padding: 16px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .details-group label {
+    font-size: 0.825rem;
+    min-width: 120px;
+  }
+
+  .details-group p {
+    font-size: 0.825rem;
+  }
+
+  .modal-content h2 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Close Button */
+.modal-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn.close {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease-in-out;
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #e5e7eb;
+}
+
+.btn.close:hover {
+  background: #e2e8f0;
+}
+
+.btn.close:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* Hover Effects */
+.details-group:hover {
+  background: rgba(79, 70, 229, 0.02);
+  cursor: default;
+}
+
+/* Status Colors */
+@keyframes status-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Ensure proper touch handling */
+.view-modal {
+  -webkit-tap-highlight-color: transparent;
+}

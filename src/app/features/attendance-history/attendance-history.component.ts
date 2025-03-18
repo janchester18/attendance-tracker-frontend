@@ -9,7 +9,6 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CustomPaginatorComponent } from '../../shared/custom-paginator/custom-paginator.component';
 
 interface AttendanceRecord {
-  User: { FullName?: string; Name: string };
   Date: string;
   ClockIn: string;
   ClockOut?: string | null;
@@ -20,9 +19,7 @@ interface AttendanceRecord {
   Status: string;
 }
 
-
 interface AttendanceTableData {
-  userName: string;
   date: Date;
   clockIn: Date;
   clockOut: Date | null;
@@ -32,7 +29,6 @@ interface AttendanceTableData {
   formattedNightDifDuration: string;
   status: string;
 }
-
 
 @Component({
   selector: 'app-attendance-history',
@@ -51,7 +47,7 @@ interface AttendanceTableData {
 })
 export class AttendanceHistoryComponent implements OnInit{
   displayedColumns: string[] = [
-    'userName', 'date', 'clockIn', 'clockOut',
+    'date', 'clockIn', 'clockOut',
     'workDuration', 'breakDuration', 'lateDuration',
     'nightDifferential', 'status'
   ];

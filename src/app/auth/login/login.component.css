@@ -170,3 +170,91 @@ button {
   cursor: pointer;
 }
 
+@media (max-width: 768px) {
+  .login-group {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    padding: 20px;
+    text-align: center; /* Ensures text is centered */
+  }
+
+  .slogotxt {
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+
+  .logo {
+    width: 150px;
+    margin-bottom: 10px;
+  }
+
+  .logotext-container {
+    align-items: center;
+    text-align: center;
+  }
+
+  .logotxt {
+    font-size: 40px;
+  }
+
+  .sublogotxt {
+    font-size: 16px;
+  }
+
+  .login-container {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .login-box {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .input-group {
+    justify-content: center;
+  }
+
+  .input-group input {
+    font-size: 14px;
+    padding-left: 40px;
+    text-align: center; /* Centers text inside input fields */
+  }
+
+  button {
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .logotxt {
+    font-size: 32px;
+  }
+
+  .sublogotxt {
+    font-size: 14px;
+  }
+
+  .login-box {
+    padding: 15px;
+    width: 95%;
+  }
+
+  .input-group input {
+    font-size: 14px;
+  }
+
+  button {
+    width: 90%;
+  }
+}
+

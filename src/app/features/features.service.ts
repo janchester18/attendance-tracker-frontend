@@ -11,7 +11,7 @@ import { catchError, map, Observable, retry, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class FeaturesService {
-  private baseUrl = 'http://10.0.0.15:5249';
+  private baseUrl = 'http://10.0.0.7:5249';
 
   // private baseUrl = "https://67ce827a125cd5af757abfbb.mockapi.io/device/laptop";
 
@@ -100,6 +100,21 @@ export class FeaturesService {
 
   clockOut(): Observable<any> {
     return this.sendPutRequest('/api/Attendance/clockout');
+  }
+
+  // ✅ Function to submit an overtime/leave request
+  addLeaveRequest(leaveRequest: any): Observable<any> {
+    const token = sessionStorage.getItem('auth_token'); // Retrieve token from session
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http
+      .post<any>(`${this.baseUrl}/api/Overtime`, leaveRequest, options)
+      .pipe(retry(3), catchError(this.handleError)); // Retry 3 times & handle errors
   }
 
   // handleLogout() {

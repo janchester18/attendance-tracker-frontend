@@ -7,16 +7,34 @@
 .navbar {
   background-color: #333333;
   color: white;
+  z-index: 999 !important;
 }
 
-.sidenav-container {
+::ng-deep .mat-sidenav-container,
+::ng-deep .mat-drawer {
+  z-index: 999 !important;
+  position: relative; /* ✅ Ensures child elements respect z-index */
+}
+
+::ng-deep .mat-drawer-inner-container,
+::ng-deep .mat-drawer {
+  z-index: 999 !important;
+  position: relative; /* ✅ Ensures child elements respect z-index */
+  border-top-right-radius: 0 !important;
+}
+
+.sidenav-container,
+::ng-deep .mat-drawer {
   height: 100vh;
   border: solid black 1px;
-
+  z-index: 999 !important;
+  position: relative; /* ✅ Ensures child elements respect z-index */
 }
 
 .sidenav {
   width: 15% !important;
+  z-index: 1   !important;
+  position: absolute;
 }
 
 .sidenav-list ::ng-deep .mat-icon {

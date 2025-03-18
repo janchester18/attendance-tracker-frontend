@@ -3,6 +3,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { SnackbarComponent } from "../../shared/snackbar/snackbar.component";
 import { Geolocation } from '@capacitor/geolocation'; // If using Capacitor for location
 import { FeaturesService } from '../features.service';
+import { SnackbarService } from '../../shared/snackbar/snackbar.service';
 
 
 @Component({
@@ -12,9 +13,10 @@ import { FeaturesService } from '../features.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  time: string = '';
+  currentDate: string = '';
+  currentTime: string = '';
 
-  constructor(private featuresService: FeaturesService) {}
+  constructor(private featuresService: FeaturesService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     this.updateTime();
@@ -23,8 +25,24 @@ export class DashboardComponent implements OnInit {
 
   updateTime() {
     const now = new Date();
-    this.time = now.toLocaleTimeString();
+
+    // Format date: Monday, January 01, 2025
+    this.currentDate = now.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit',
+    });
+
+    // Format time: 12:34:56 PM
+    this.currentTime = now.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    });
   }
+
 
   async clockIn() {
     try {
@@ -36,32 +54,23 @@ export class DashboardComponent implements OnInit {
       // Call the clock-in function
       this.featuresService.clockIn(latitude, longitude).subscribe({
         next: (response: any) => {
-          console.log("Full Response from API:", response); // Debugging
-
           if (!response) {
-            alert("No response from server. Please try again.");
-            console.error("Null or undefined response received.");
+            this.snackbarService.showError("No response from server. Please try again.");
             return;
           }
-
-          console.log("Response status:", response.status);
-          console.log("Response message:", response.message);
-          console.log("Response data:", response.data);
-
           if (response.status === "SUCCESS") {
-            alert(response.message);
+            this.snackbarService.showSuccess(response.message);
+
           } else {
-            alert("Something went wrong. Try again.");
+            this.snackbarService.showError("Something went wrong. Try again.");
           }
         },
         error: (error) => {
-          alert("Clock-in failed. Please try again.");
-          console.error("Clock-in error:", error);
+          this.snackbarService.showError(error || "Clock-in failed. Please try again.");
         }
       });
     } catch (error) {
-      alert("Could not get location. Please enable GPS.");
-      console.error("Geolocation error:", error);
+      this.snackbarService.showError("Could not get location. Please enable GPS.");
     }
   }
 
@@ -70,12 +79,10 @@ export class DashboardComponent implements OnInit {
   startBreak() {
     this.featuresService.startBreak().subscribe({
         next: (response) => {
-            alert(response.message);
-            console.log(response);
+            this.snackbarService.showSuccess(response.message);
         },
         error: (error) => {
-            alert(error.message || "Start break failed.");
-            console.error(error);
+            this.snackbarService.showError(error.message || "Start break failed.");
         }
     });
   }
@@ -83,26 +90,24 @@ export class DashboardComponent implements OnInit {
   endBreak() {
     this.featuresService.endBreak().subscribe({
         next: (response) => {
-            alert(response.message);
-            console.log(response);
+          this.snackbarService.showSuccess(response.message);
+          console.log(response);
         },
         error: (error) => {
-            alert(error.message || "End break failed.");
-            console.error(error);
+          this.snackbarService.showError(error.message || "End break failed.");
         }
     });
   }
 
   clockOut() {
     this.featuresService.clockOut().subscribe({
-        next: (response) => {
-            alert(response.message);
-            console.log(response);
-        },
-        error: (error) => {
-            alert(error.message || "Clock-out failed.");
-            console.error(error);
-        }
+      next: (response) => {
+        this.snackbarService.showSuccess(response.message);
+        console.log(response);
+      },
+      error: (error) => {
+        this.snackbarService.showError(error.message || "Clock-out failed.");
+      }
     });
   }
 }

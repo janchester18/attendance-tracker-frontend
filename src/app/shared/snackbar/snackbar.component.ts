@@ -17,10 +17,11 @@ export class SnackbarComponent {
     this.message = msg;
     this.type = type;
     this.show = true;
+    console.log('Snackbar Triggered:', msg); // ✅ Debugging
 
     // Auto-hide after 3 seconds
     setTimeout(() => {
       this.show = false;
-    }, 30000);
+    }, 3000);
   }
 }

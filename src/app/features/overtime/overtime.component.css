@@ -23,6 +23,10 @@
   margin-bottom: 16px;
 }
 
+.header-container h2 {
+  margin-top: 0px !important;
+}
+
 ::ng-deep .mat-table {
   width: 100% !important;
   max-width: 100%;
@@ -89,4 +93,11 @@ td {
 .status-leave {
   color: blue;
   font-weight: bold;
+}
+
+.details-btn {
+  color: #64B5F6 !important;
+}
+.edit-btn {
+  color: #FFA726 !important;
 }

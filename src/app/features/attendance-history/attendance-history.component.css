@@ -7,6 +7,10 @@
   padding: 20px;
 }
 
+.attendance-container h2 {
+  margin-top: 0 !important;
+}
+
 ::ng-deep .mat-table {
   width: 100% !important;
   max-width: 100%;
