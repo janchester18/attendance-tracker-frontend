@@ -102,3 +102,10 @@
   [overtimeData]="selectedOvertime"
   (close)="closeDetailsModal()">
 </app-view-overtime-request>
+
+<!-- Display Modal Component -->
+<app-edit-overtime-request *ngIf="isEditOvertimeModalOpen"
+[overtimeData]="selectedOvertime"
+(close)="closeEditModal()"
+(submitRequest)="handleSubmission($event)">
+</app-edit-overtime-request>

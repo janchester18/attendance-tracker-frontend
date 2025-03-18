@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { AddOvertimeRequestComponent } from '../../modals/add-overtime-request/add-overtime-request.component';
 import { ViewOvertimeRequestComponent } from '../../modals/view-overtime-request/view-overtime-request.component';
+import { EditOvertimeRequestComponent } from '../../modals/edit-overtime-request/edit-overtime-request.component';
 
 interface OvertimeRecord {
   id: number;
@@ -39,7 +40,8 @@ interface OvertimeRecord {
     MatPaginatorModule,
     CustomPaginatorComponent,
     AddOvertimeRequestComponent,
-    ViewOvertimeRequestComponent
+    ViewOvertimeRequestComponent,
+    EditOvertimeRequestComponent
   ],
   templateUrl: './overtime.component.html',
   styleUrls: ['./overtime.component.css']
@@ -47,6 +49,7 @@ interface OvertimeRecord {
 export class OvertimeComponent implements OnInit {
   isAddOvertimeModalOpen = false;
   isViewOvertimeModalOpen = false; // Controls modal visibility
+  isEditOvertimeModalOpen = false; // Controls modal visibility
   selectedOvertime: any = null; // Stores the overtime request to view
 
   displayedColumns: string[] = [
@@ -89,8 +92,10 @@ export class OvertimeComponent implements OnInit {
         this.overtimeRecords.data = response.data.overtime.map((record: OvertimeRecord) => ({
           ...record,
           date: new Date(record.date).toISOString().split('T')[0], // Convert to YYYY-MM-DD format
-          startTime: this.formatTime(record.startTime),
-          endTime: this.formatTime(record.endTime),
+          startTime24: record.startTime, // Keep original 24-hour format
+          endTime24: record.endTime, // Keep original 24-hour format
+          startTime: this.formatTime(record.startTime), // Convert to 12-hour for display
+          endTime: this.formatTime(record.endTime), // Convert to 12-hour for display
         }));
         this.totalRecords = response.data.totalRecords;
         this.pageSize = response.data.pageSize;
@@ -131,12 +136,36 @@ export class OvertimeComponent implements OnInit {
   }
 
   closeDetailsModal() {
-    this.isViewOvertimeModalOpen = false;
-    this.selectedOvertime = null; // Reset data when closing
+    document.querySelector('.view-modal')?.classList.add('hide');
+    document.querySelector('.modal-overlay')?.classList.add('hide');
+
+    setTimeout(() => {
+      this.selectedOvertime = null; // Reset data when closing
+      this.isViewOvertimeModalOpen = false; // Hide modal after animation
+    }, 100);
   }
 
-  editRecord(record: string = "edit") {
-    console.log("edit button clicked.")
+  // Function to handle viewing details
+  editRecord(overtime: any) {
+    this.isEditOvertimeModalOpen = true; // Open the modal
+    this.selectedOvertime = {
+      ...overtime,
+      startTime: overtime.startTime24, // Pass 24-hour format
+      endTime: overtime.endTime24, // Pass 24-hour format
+  };    setTimeout(() => {
+      document.querySelector('.custom-modal')?.classList.add('show');
+      document.querySelector('.modal-overlay')?.classList.add('show');
+    }, 10);
+  }
+
+  closeEditModal() {
+    document.querySelector('.custom-modal')?.classList.add('hide');
+    document.querySelector('.modal-overlay')?.classList.add('hide');
+
+    setTimeout(() => {
+      this.selectedOvertime = null; // Reset data when closing
+      this.isEditOvertimeModalOpen = false; // Hide modal after animation
+    }, 100);
   }
 
   AddOvertimeModal() {

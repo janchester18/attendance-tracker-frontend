@@ -1,7 +1,7 @@
 <!-- Modal Container -->
 <div class="custom-modal">
   <div class="modal-content">
-    <h2>Add Overtime Request</h2>
+    <h2>Edit Overtime Request</h2>
     <form [formGroup]="overtimeForm">
       <div class="form-group" [ngClass]="{'error': isInvalid('date')}">
         <label>Date</label>
@@ -47,7 +47,8 @@
 
     <div class="modal-actions">
       <button class="btn close" (click)="closeModal()">Close</button>
-      <button class="btn submit" (click)="submit()">Submit</button>
+      <button class="btn cancel" (click)="cacelOvertimeRequest()">Cancel Request</button>
+      <button class="btn submit" (click)="submit()">Save Changes</button>
     </div>
   </div>
 </div>

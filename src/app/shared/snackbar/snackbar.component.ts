@@ -22,6 +22,6 @@ export class SnackbarComponent {
     // Auto-hide after 3 seconds
     setTimeout(() => {
       this.show = false;
-    }, 3000);
+    }, 6000);
   }
 }

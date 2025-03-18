@@ -52,6 +52,11 @@
   transition: transform 0.2s ease-in, opacity 0.2s ease-in;
 }
 
+.modal-overlay.hide {
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+}
+
 /* Details Content */
 .modal-content {
   text-align: left;

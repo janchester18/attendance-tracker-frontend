@@ -46,6 +46,16 @@
       </div>
 
       <div class="details-group">
+        <label>Reviewed By:</label>
+        <p>{{ overtimeData.reviewedBy ? overtimeData.approverName : 'Not yet reviewed' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Rejection Reason:</label>
+        <p>{{ overtimeData.rejectionReason ? overtimeData.rejectionReason : 'N/A' }}</p>
+      </div>
+
+      <div class="details-group">
         <label>Created At:</label>
         <p>{{ overtimeData.createdAt | date: 'MMMM dd, yyyy hh:mm a' }}</p>
       </div>
@@ -55,20 +65,6 @@
         <p>{{ overtimeData.updatedAt | date: 'MMMM dd, yyyy hh:mm a' }}</p>
       </div>
 
-      <div class="details-group">
-        <label>Reviewed By:</label>
-        <p>{{ overtimeData.reviewedBy ? overtimeData.approverName : 'Not yet reviewed' }}</p>
-      </div>
-
-      <div class="details-group">
-        <label>Approver Name:</label>
-        <p>{{ overtimeData.approverName ? overtimeData.approverName : 'N/A' }}</p>
-      </div>
-
-      <div class="details-group">
-        <label>Rejection Reason:</label>
-        <p>{{ overtimeData.rejectionReason ? overtimeData.rejectionReason : 'N/A' }}</p>
-      </div>
     </div>
 
     <div class="modal-actions">
