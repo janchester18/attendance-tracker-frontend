@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { CustomPaginatorComponent } from '../../shared/custom-paginator/custom-paginator.component';
 
 interface AttendanceRecord {
   User: { FullName?: string; Name: string };
@@ -44,6 +45,7 @@ interface AttendanceTableData {
     MatIconModule,
     MatSort,
     MatPaginatorModule,
+    CustomPaginatorComponent
     ],
   styleUrls: ['./attendance-history.component.css']
 })
@@ -53,59 +55,52 @@ export class AttendanceHistoryComponent implements OnInit{
     'workDuration', 'breakDuration', 'lateDuration',
     'nightDifferential', 'status'
   ];
-  paginator: MatPaginator | undefined;
 
   attendanceRecords = new MatTableDataSource<AttendanceTableData>([]);
 
-  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
-    this.paginator = paginator;
-    this.attendanceRecords.paginator = this.paginator;
-  }
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
+
   @ViewChild(MatSort) set matSort(sort: MatSort) {
     this.attendanceRecords.sort = sort;
   }
 
   constructor(private featuresServices: FeaturesService) {} // Inject Service
 
-  ngOnInit(): void {
+  totalRecords: number = 0;
+  pageSize: number = 10;
+  currentPage: number = 1;
+
+  ngOnInit() {
     this.loadAttendanceHistory();
   }
 
-  loadAttendanceHistory(page: number = 1, pageSize: number = 10): void {
-    this.featuresServices.getSelfAttendanceHistory(page, pageSize).subscribe({
+  loadAttendanceHistory(page: number = 1, size: number = 10) {
+    this.featuresServices.getSelfAttendanceHistory(page, size).subscribe({
       next: (response: any) => {
-        const attendanceData = response.data?.attendance || [];
+        console.log('📦 API Response:', response);
 
-        if (Array.isArray(attendanceData)) {
-          this.attendanceRecords.data = attendanceData.map((record) => ({
-            userName: record?.user?.FullName || record?.user?.name || 'Unknown',
-            date: new Date(record?.date),
-            clockIn: new Date(record?.clockIn),
-            clockOut: record?.clockOut ? new Date(record?.clockOut) : null,
-            formattedWorkDuration: record?.formattedWorkDuration || '-',
-            formattedBreakDuration: record?.formattedBreakDuration || '-',
-            formattedLateDuration: record?.formattedLateDuration || '-',
-            formattedNightDifDuration: record?.formattedNightDifDuration || '-',
-            status: record?.status || 'Unknown'
-          }));
-
-          // Set paginator length
-          if (this.paginator) {
-            this.paginator.length = response.data?.totalRecords || attendanceData.length;
-          }
-        } else {
-          console.error('Error: API attendance data is not an array', response.data);
-        }
+        this.attendanceRecords.data = response.data?.attendance?.map((record: any) => ({
+          ...record,
+          userName: record.user?.name || 'N/A'
+        })) || [];      this.totalRecords = response.data?.totalRecords || this.attendanceRecords.data.length;
+        this.currentPage = page;
+        this.pageSize = size;
       },
-      error: (err) => console.error('Error fetching attendance:', err)
+      error: err => console.error('❌ Error fetching attendance:', err)
     });
   }
 
-  // Trigger pagination event
-  onPageChange(event: any) {
-    console.log('Page changed:', event);
-    this.loadAttendanceHistory(event.pageIndex + 1, event.pageSize);
+  // Handle Page Change
+  onPageChange(newPage: number) {
+    console.log('📢 Changing to Page:', newPage);
+    this.loadAttendanceHistory(newPage, this.pageSize);
+  }
+
+  // Handle Page Size Change
+  onPageSizeChange(newSize: number) {
+    console.log('🔄 Changing Page Size:', newSize);
+    this.pageSize = newSize;
+    this.currentPage = 1; // Reset to first page
+    this.loadAttendanceHistory(1, newSize);
   }
 }
-
-

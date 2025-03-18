@@ -4,6 +4,8 @@ import { MainLayoutComponent } from './core/main-layout/main-layout.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AttendanceHistoryComponent } from './features/attendance-history/attendance-history.component';
 import { authGuard } from './auth.guard'; // Import your function-based guard
+import { OvertimeComponent } from './features/overtime/overtime.component';
+import { LeaveComponent } from './features/leave/leave.component';
 
 
 export const routes: Routes = [
@@ -19,6 +21,8 @@ export const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
       { path: 'attendance-history', component: AttendanceHistoryComponent, canActivate: [authGuard] },
+      { path: 'overtime', component: OvertimeComponent, canActivate: [authGuard] },
+      { path: 'leave', component: LeaveComponent, canActivate: [authGuard] },
     ],
   },
 ];

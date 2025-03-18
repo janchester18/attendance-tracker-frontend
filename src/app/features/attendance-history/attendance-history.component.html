@@ -65,10 +65,11 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </mat-table>
-  <mat-paginator
-  [length]="paginator?.length || attendanceRecords.data.length || 0"
-  [pageSize]="10"
-  [pageSizeOptions]="[2, 5, 10, 20, 30]"
-  (page)="onPageChange($event)">
-</mat-paginator>
+  <app-custom-paginator
+  [totalRecords]="totalRecords"
+  [pageSize]="pageSize"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)"
+  (pageSizeChange)="onPageSizeChange($event)">
+</app-custom-paginator>
 </div>

@@ -11,27 +11,26 @@ import { catchError, map, Observable, retry, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class FeaturesService {
-  private baseUrl = 'http://10.0.0.19:5249';
+  private baseUrl = 'http://10.0.0.15:5249';
 
   // private baseUrl = "https://67ce827a125cd5af757abfbb.mockapi.io/device/laptop";
 
   constructor(private http: HttpClient, private router: Router) {}
 
   getSelfAttendanceHistory(page: number = 1, pageSize: number = 10): Observable<any> {
-    const token = sessionStorage.getItem('auth_token');
-    const options = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }),
-    };
+    const url = `${this.baseUrl}/api/Attendance/self?page=${page}&pageSize=${pageSize}`;
+    return this.sendGetRequest(url);
+  }
 
-    return this.http.get<any>(`${this.baseUrl}/api/Attendance/self?page=${page}&pageSize=${pageSize}`, options).pipe(
-        map((data: any) => data),
-        retry(3),
-        catchError(this.handleError)
-      );
-    }
+  getSelfOvertimeRequests(page: number = 1, pageSize: number = 10): Observable<any> {
+    const url = `${this.baseUrl}/api/Overtime/self?page=${page}&pageSize=${pageSize}`;
+    return this.sendGetRequest(url);
+  }
+
+  getSelLeaveRequests(page: number = 1, pageSize: number = 10): Observable<any> {
+    const url = `${this.baseUrl}/api/Leave/self?page=${page}&pageSize=${pageSize}`;
+    return this.sendGetRequest(url);
+  }
 
     /** 🔹 Login Function */
   login(email: string, password: string): Observable<any> {
@@ -63,6 +62,44 @@ export class FeaturesService {
     });
 
     return this.http.post(`${this.baseUrl}/api/auth/logout`, {}, { headers });
+  }
+
+  clockIn(latitude: number, longitude: number): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const url = `${this.baseUrl}/api/Attendance/clockin`;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    const body = {
+      clockInLatitude: latitude,
+      clockInLongitude: longitude
+    };
+
+    return this.http.post<any>(url, body, { headers }).pipe(
+      map(response => {
+        if (response.status === 'SUCCESS') {
+          return response; // Return clock-in response
+        } else {
+          throw new Error(response.message || 'Clock-in failed');
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  startBreak(): Observable<any> {
+    return this.sendPutRequest('/api/Attendance/start-break');
+  }
+
+  endBreak(): Observable<any> {
+      return this.sendPutRequest('/api/Attendance/end-break');
+  }
+
+  clockOut(): Observable<any> {
+    return this.sendPutRequest('/api/Attendance/clockout');
   }
 
   // handleLogout() {
@@ -110,6 +147,43 @@ export class FeaturesService {
     return this.http
       .post<any>(`${this.baseUrl}/device/laptop/?pageSize=30&page=1`, laptop, options)
       .pipe(retry(3), catchError(this.handleError));
+  }
+
+  private sendPutRequest(endpoint: string): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const url = `${this.baseUrl}${endpoint}`;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(url, {}, { headers }).pipe(
+      map(response => {
+        if (response.status === 'SUCCESS') {
+          return response;
+        } else {
+          throw new Error(response.message || 'Request failed');
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  sendGetRequest(url: string): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }),
+    };
+
+    return this.http.get<any>(url, options).pipe(
+      map((data: any) => data),
+      retry(3),
+      catchError(this.handleError)
+    );
   }
 
   // getAllLaptop(): Observable<any> {
