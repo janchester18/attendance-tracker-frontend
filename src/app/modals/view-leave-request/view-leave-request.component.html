@@ -1,0 +1,70 @@
+<div class="view-modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+  <div class="modal-content">
+    <h2 id="modalTitle">Leave Request Details</h2>
+
+    <div class="details-container">
+      <div class="details-group">
+        <label>ID:</label>
+        <p>{{ leaveData.id }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Employee Name:</label>
+        <p>{{ leaveData.userName }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Leave Type:</label>
+        <p>{{ leaveData.typeName }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Start Date:</label>
+        <p>{{ leaveData.startDate | date: 'MMMM dd, yyyy' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>End Date:</label>
+        <p>{{ leaveData.endDate | date: 'MMMM dd, yyyy' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Days Count:</label>
+        <p>{{ leaveData.daysCount }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Reason:</label>
+        <p>{{ leaveData.reason }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Status:</label>
+        <p [ngClass]="{'approved': leaveData.statusName === 'Approved', 'pending': leaveData.statusName === 'Pending'}">
+          {{ leaveData.statusName }}
+        </p>
+      </div>
+
+      <div class="details-group">
+        <label>Reviewed By:</label>
+        <p>{{ leaveData.reviewedBy ? leaveData.approverName : 'Not yet reviewed' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Rejection Reason:</label>
+        <p>{{ leaveData.rejectionReason ? leaveData.rejectionReason : 'N/A' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Created Date:</label>
+        <p>{{ leaveData.createdDate | date: 'MMMM dd, yyyy hh:mm a' }}</p>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn close" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" (click)="closeModal()"></div>

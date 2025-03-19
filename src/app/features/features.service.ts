@@ -11,7 +11,7 @@ import { catchError, map, Observable, retry, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class FeaturesService {
-  private baseUrl = 'http://10.0.0.7:5249';
+  private baseUrl = 'http://10.0.0.6:5249';
 
   // private baseUrl = "https://67ce827a125cd5af757abfbb.mockapi.io/device/laptop";
 
@@ -27,7 +27,7 @@ export class FeaturesService {
     return this.sendGetRequest(url);
   }
 
-  getSelLeaveRequests(page: number = 1, pageSize: number = 10): Observable<any> {
+  getSelfLeaveRequests(page: number = 1, pageSize: number = 10): Observable<any> {
     const url = `${this.baseUrl}/api/Leave/self?page=${page}&pageSize=${pageSize}`;
     return this.sendGetRequest(url);
   }
@@ -102,6 +102,92 @@ export class FeaturesService {
     return this.sendPutRequest('/api/Attendance/clockout');
   }
 
+  updateOvertimeRequest(id: number, formData: any): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const url = `${this.baseUrl}/api/Overtime/update/${id}`; // API endpoint with ID
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(url, formData, { headers }).pipe(
+      map(response => {
+        if (response.status === 'SUCCESS') {
+          return response;
+        } else {
+          throw new Error(response.message || 'Overtime update failed');
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  cancelOvertimeRequest(id: number): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const url = `${this.baseUrl}/api/Overtime/cancel/${id}`; // API endpoint with ID
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(url, {}, { headers }).pipe(
+      map(response => {
+        if (response.status === 'SUCCESS') {
+          return response;
+        } else {
+          throw new Error(response.message || 'Overtime cancellation failed');
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  updateLeaveRequest(id: number, formData: any): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const url = `${this.baseUrl}/api/Leave/update/${id}`; // API endpoint with ID
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(url, formData, { headers }).pipe(
+      map(response => {
+        if (response.status === 'SUCCESS') {
+          return response;
+        } else {
+          throw new Error(response.message || 'Leave update failed');
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  cancelLeaveRequest(id: number): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const url = `${this.baseUrl}/api/Leave/cancel/${id}`; // API endpoint with ID
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(url, {}, { headers }).pipe(
+      map(response => {
+        if (response.status === 'SUCCESS') {
+          return response;
+        } else {
+          throw new Error(response.message || 'Overtime cancellation failed');
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+
+
   // ✅ Function to submit an overtime/leave request
   addLeaveRequest(leaveRequest: any): Observable<any> {
     const token = sessionStorage.getItem('auth_token'); // Retrieve token from session
@@ -113,7 +199,7 @@ export class FeaturesService {
     };
 
     return this.http
-      .post<any>(`${this.baseUrl}/api/Overtime`, leaveRequest, options)
+      .post<any>(`${this.baseUrl}/api/Leave`, leaveRequest, options)
       .pipe(retry(3), catchError(this.handleError)); // Retry 3 times & handle errors
   }
 

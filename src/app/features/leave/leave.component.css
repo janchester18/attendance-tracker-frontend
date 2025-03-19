@@ -1,0 +1,151 @@
+/* * {
+  border: solid red 1px;
+} */
+
+.attendance-container {
+  max-width: 100%;
+  padding: 20px;
+}
+
+::ng-deep .add-overtime-button {
+  background-color: #2196f3 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header-container h2 {
+  margin-top: 0px !important;
+}
+
+::ng-deep .mat-table {
+  width: 100% !important;
+  max-width: 100vw;
+  background: white;
+  border: solid 1px rgba(128, 128, 128, 0.3) !important;
+  border-radius: 10px;
+  overflow-x: auto;
+  table-layout: fixed !important; /* Para di lumampas sa container */
+  /* Light shadow for a subtle elevation effect */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .mat-mdc-cell {
+  width: auto !important;
+  text-align: center !important;
+  word-wrap: break-word !important;
+  white-space: normal !important; /* Para di mag-one line lang */
+}
+
+.mat-column-startDate {
+  min-width: 400px;
+  max-width: 1000px;
+}
+
+.mat-column-endDate {
+  width: 200px;
+}
+
+.mat-column-reason {
+  width: 500px;
+}
+
+::ng-deep .mat-mdc-header-cell {
+  white-space: nowrap !important; /* Prevents text from wrapping */
+  text-align: center;
+}
+
+::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px !important;
+}
+
+th {
+  font-weight: bold;
+  background-color: #f4f4f4;
+  max-height: 1px !important;
+}
+
+::ng-deep .mat-sort-header {
+  max-height: 1px !important;
+}
+
+td {
+  padding: 10px;
+}
+
+.status-present {
+  color: green;
+  font-weight: bold;
+}
+
+.status-absent {
+  color: red;
+  font-weight: bold;
+}
+
+.status-late {
+  color: orange;
+  font-weight: bold;
+}
+
+.status-leave {
+  color: blue;
+  font-weight: bold;
+}
+
+.details-btn {
+  color: #64B5F6 !important;
+}
+.edit-btn {
+  color: #FFA726 !important;
+}
+
+/* Override centering for the actions column */
+.mat-column-actions {
+  min-width: 100px;
+  max-width: 200px;
+  text-align: left !important; /* Aligns only the actions column to the left */
+}
+
+/* Approved Status */
+.status-approved {
+  color: #2e7d32;  /* Green */
+  font-weight: bold;
+}
+
+/* Pending Status */
+.status-pending {
+  color: #f9a825;  /* Yellow/Orange */
+  font-weight: bold;
+}
+
+/* Rejected Status */
+.status-rejected {
+  color: #d32f2f;  /* Red */
+  font-weight: bold;
+}
+
+/* Default/Fallback */
+.status-default {
+  color: #757575;  /* Gray */
+  font-weight: bold;
+}
+
+.empty-message {
+  text-align: center;
+  font-size: 16px;
+  color: gray;
+  margin: 20px 0;
+}

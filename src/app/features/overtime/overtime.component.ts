@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { AddOvertimeRequestComponent } from '../../modals/add-overtime-request/add-overtime-request.component';
 import { ViewOvertimeRequestComponent } from '../../modals/view-overtime-request/view-overtime-request.component';
 import { EditOvertimeRequestComponent } from '../../modals/edit-overtime-request/edit-overtime-request.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 interface OvertimeRecord {
   id: number;
@@ -41,7 +43,8 @@ interface OvertimeRecord {
     CustomPaginatorComponent,
     AddOvertimeRequestComponent,
     ViewOvertimeRequestComponent,
-    EditOvertimeRequestComponent
+    EditOvertimeRequestComponent,
+    MatTooltipModule
   ],
   templateUrl: './overtime.component.html',
   styleUrls: ['./overtime.component.css']
@@ -59,8 +62,6 @@ export class OvertimeComponent implements OnInit {
     'reason',
     'expectedOutput',
     'status',
-    'approverName',
-    'rejectionReason',
     'actions',
   ];
 
@@ -91,7 +92,7 @@ export class OvertimeComponent implements OnInit {
       if (response.status === 'SUCCESS') {
         this.overtimeRecords.data = response.data.overtime.map((record: OvertimeRecord) => ({
           ...record,
-          date: new Date(record.date).toISOString().split('T')[0], // Convert to YYYY-MM-DD format
+          date: new Date(record.date).toLocaleDateString('en-CA'), // Convert to YYYY-MM-DD format
           startTime24: record.startTime, // Keep original 24-hour format
           endTime24: record.endTime, // Keep original 24-hour format
           startTime: this.formatTime(record.startTime), // Convert to 12-hour for display
@@ -152,7 +153,9 @@ export class OvertimeComponent implements OnInit {
       ...overtime,
       startTime: overtime.startTime24, // Pass 24-hour format
       endTime: overtime.endTime24, // Pass 24-hour format
-  };    setTimeout(() => {
+  };
+  console.log(overtime);
+  setTimeout(() => {
       document.querySelector('.custom-modal')?.classList.add('show');
       document.querySelector('.modal-overlay')?.classList.add('show');
     }, 10);

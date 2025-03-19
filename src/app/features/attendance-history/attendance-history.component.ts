@@ -77,6 +77,7 @@ export class AttendanceHistoryComponent implements OnInit{
 
         this.attendanceRecords.data = response.data?.attendance?.map((record: any) => ({
           ...record,
+          date: new Date(record.date).toLocaleDateString('en-CA'), // Convert to YYYY-MM-DD format
           userName: record.user?.name || 'N/A'
         })) || [];      this.totalRecords = response.data?.totalRecords || this.attendanceRecords.data.length;
         this.currentPage = page;

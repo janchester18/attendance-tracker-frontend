@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-custom-paginator',
-  imports: [MatFormFieldModule, MatSelectModule],
+  imports: [MatFormFieldModule, MatSelectModule, MatButtonModule],
   templateUrl: './custom-paginator.component.html',
   styleUrls: ['./custom-paginator.component.css']
 })

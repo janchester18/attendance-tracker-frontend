@@ -1,0 +1,66 @@
+<!-- Modal Container -->
+<div class="custom-modal">
+  <div class="modal-content">
+    <h2>Add Leave Request</h2>
+    <form [formGroup]="leaveForm">
+      <!-- Start Date -->
+      <div class="form-group" [ngClass]="{'error': isInvalid('startDate')}">
+        <label>Start Date</label>
+        <input type="date" formControlName="startDate" [min]="today">
+        <!-- Show only if the user has interacted with the field and it's empty -->
+        <small *ngIf="leaveForm.controls['startDate'].hasError('required') && leaveForm.controls['startDate'].touched">
+          Date is required
+        </small>
+        <!-- Show only if a past date is entered and the field is touched -->
+        <small *ngIf="leaveForm.controls['startDate'].hasError('pastDate') && leaveForm.controls['startDate'].touched">
+          Date cannot be in the past
+        </small>
+      </div>
+
+      <!-- End Date -->
+      <div class="form-group" [ngClass]="{'error': isInvalid('endDate')}">
+        <label>End Date</label>
+        <input type="date" formControlName="endDate" [min]="today">
+        <!-- Show only if the user has interacted with the field and it's empty -->
+        <small *ngIf="leaveForm.controls['endDate'].hasError('required') && leaveForm.controls['endDate'].touched">
+          Date is required
+        </small>
+        <!-- Show only if a past date is entered and the field is touched -->
+        <small *ngIf="leaveForm.controls['endDate'].hasError('pastDate') && leaveForm.controls['endDate'].touched">
+          Date cannot be in the past
+        </small>
+      </div>
+
+      <!-- Leave Type (Static Dropdown) -->
+      <div class="form-group" [ngClass]="{'error': isInvalid('type')}">
+        <label>Leave Type</label>
+        <select formControlName="type">
+          <option value="" disabled selected>Select Leave Type</option>
+          <option *ngFor="let leave of leaveTypes" [value]="leave.id">
+            {{ leave.name }}
+          </option>
+        </select>
+        <small *ngIf="isInvalid('type')">Leave Type is required</small>
+      </div>
+
+      <!-- Reason -->
+      <div class="form-group" [ngClass]="{'error': isInvalid('reason')}">
+        <label>Reason</label>
+        <textarea formControlName="reason"></textarea>
+        <small *ngIf="isInvalid('reason')">Reason must be at least 5 characters</small>
+      </div>
+    </form>
+
+    <p *ngIf="validationMessage" class="error-message">
+      {{ validationMessage }}
+    </p>
+
+    <div class="modal-actions">
+      <button class="btn close" (click)="closeModal()">Close</button>
+      <button class="btn submit" (click)="submit()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay Background -->
+<div class="modal-overlay" (click)="closeModal()"></div>

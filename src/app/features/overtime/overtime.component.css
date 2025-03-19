@@ -29,13 +29,12 @@
 
 ::ng-deep .mat-table {
   width: 100% !important;
-  max-width: 100%;
+  max-width: 100vw;
   background: white;
   border: solid 1px rgba(128, 128, 128, 0.3) !important;
   border-radius: 10px;
-  table-layout: auto; /* Ensures responsiveness */
   overflow-x: auto;
-
+  table-layout: fixed !important; /* Para di lumampas sa container */
   /* Light shadow for a subtle elevation effect */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -43,13 +42,26 @@
 ::ng-deep .mat-mdc-cell {
   width: auto !important;
   text-align: center !important;
-  white-space: nowrap !important; /* Prevents text from wrapping */
-  text-align: center;
+  word-wrap: break-word !important;
+  white-space: normal !important; /* Para di mag-one line lang */
 }
 
+/* Override centering for the actions column */
+.mat-column-reason {
+  width: 400px;
+}
+
+.mat-column-expectedOutput {
+  width: 400px;
+}
+
+.mat-column-date {
+  min-width: 300px;
+  max-width: 1000px;
+}
+
+
 ::ng-deep .mat-mdc-header-cell {
-  width: 100% !important;
-  max-width: 100%;
   white-space: nowrap !important; /* Prevents text from wrapping */
   text-align: center;
 }
@@ -100,4 +112,11 @@ td {
 }
 .edit-btn {
   color: #FFA726 !important;
+}
+
+/* Override centering for the actions column */
+.mat-column-actions {
+  min-width: 100px;
+  max-width: 200px;
+  text-align: left !important; /* Aligns only the actions column to the left */
 }
