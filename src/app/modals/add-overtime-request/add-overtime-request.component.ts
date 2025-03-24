@@ -80,7 +80,7 @@ noPastDatesValidator(): ValidatorFn {
     this.validationMessage = '';
 
     if (this.overtimeForm.valid) {
-      this.featuresService.addLeaveRequest(this.overtimeForm.value).subscribe({
+      this.featuresService.addOvertimeRequest(this.overtimeForm.value).subscribe({
         next: (response) => {
           if (response.status === 'SUCCESS' && response.data === null) {
             // ❌ Don't close modal if validation error exists
@@ -90,14 +90,14 @@ noPastDatesValidator(): ValidatorFn {
             // ✅ Close modal only if request is truly successful
             console.log('Overtime request submitted successfully:', response);
             this.submitRequest.emit(response);
-            this.snackbarService.showSuccess('Overtime Request Submitted Successfully!');
+            this.snackbarService.showSuccess(response.message);
             this.refreshTable.emit(); // ✅ Emit event to refresh table
             this.closeModal();
           }
         },
-        error: (error) => {
-          console.error('Error submitting request:', error);
-          this.snackbarService.showError('Something went wrong. Please try again.');
+        error: (response) => {
+          console.error('Error submitting request:', response.message);
+          this.snackbarService.showError(response.message);
         }
       });
     }

@@ -1,0 +1,361 @@
+/* * {
+  border: solid red 1px;
+} */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.clock {
+  font-size: 5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.clock-container {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.date {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.time {
+  font-size: 7rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 5px;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+}
+
+::ng-deep .clock-in-btn {
+  background-color: #4caf50 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+::ng-deep .start-break-btn {
+  background-color: #ff9800 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+::ng-deep .end-break-btn {
+  background-color: #2196f3 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+::ng-deep .clock-out-btn {
+  background-color: #f44336 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+
+    height: 100vh;
+  }
+
+  .date {
+    font-size: 1.5rem;
+  }
+
+  .time {
+    font-size: 3rem;
+  }
+  .buttons {
+    flex-direction: column;
+  }
+
+}
+
+/* Container for both sections */
+.statistics-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* space between the two sections */
+  margin: 20px;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+
+}
+
+/* Summary Section (Employee Summary) */
+.summary-section {
+  flex: 1 1 300px; /* grow, shrink, and set a minimum width */
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.summary-section h2{
+  margin-top: 0px;
+}
+
+/* Each stat block within summary */
+.stats {
+  display: flex;
+  gap: 15px;
+}
+
+.stat {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 6px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 185px;
+
+  /* Center content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.stat h3 {
+  margin: 0;
+  font-size: 4em;
+  color: #333;
+}
+
+.stat p {
+  margin: 5px 0 0;
+  font-size: 0.9em;
+  color: #777;
+}
+
+/* Attendance Activity Section */
+.attendance-activity {
+  flex: 2 1 500px; /* grows more than summary and sets a minimum width */
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Table adjustments if needed */
+.attendance-activity table {
+  width: 100%;
+}
+
+.attendance-activity h2 {
+  margin-top: 0px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .statistics-container {
+    flex-direction: column;
+  }
+}
+
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.left-panel {
+  flex: 0 0 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 80vh;
+}
+
+.right-panel {
+  flex: 0 0 35%;
+}
+
+/* Update buttons to take full width */
+.buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.attendance-activity {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+}
+
+.log-list {
+  margin-top: 20px;
+  max-height: 61vh; /* Adjust height as needed */
+  overflow-y: auto;
+  padding-right: 10px; /* Prevents content from being cut off */
+}
+
+/* Optional: Style scrollbar for better UX */
+.log-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.log-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.log-list::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.log-list::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.log-item {
+  padding: 20px 0;
+  border-bottom: 1px solid #ddd;
+  max-width: 400px;
+}
+
+.log-item:last-child {
+  border-bottom: none;
+}
+
+.log-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.log-employee {
+  font-weight: bold;
+  flex: 1;
+}
+
+.log-action {
+  flex: 1;
+  text-align: center; /* Align text properly */
+  max-width: 100%;
+  word-wrap: break-word; /* Ensures text wraps */
+  overflow-wrap: break-word; /* Alternative for text wrapping */
+  white-space: normal; /* Ensures text wraps instead of staying in one line */
+}
+
+
+.log-time {
+  flex: 1;
+  text-align: right;
+  color: #666;
+  font-size: 0.9em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    height: 100vh;
+  }
+  .main-container {
+    flex-direction: column;
+  }
+
+  .left-panel, .right-panel {
+    width: 100%;
+  }
+
+  .stat {
+    height: 80px;
+  }
+
+  .right-panel {
+    margin-top: 100px;
+  }
+}
+
+/* Responsive adjustments */
+@media (width: 957px) {
+  .time {
+    font-size: 3rem;
+  }
+  .container {
+    height: 60vh;
+  }
+  .main-container {
+    flex-direction: column;
+  }
+
+  .left-panel, .right-panel {
+    width: 100%;
+  }
+
+  .right-panel {
+
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1068px) {
+  .time {
+    font-size: 3rem;
+  }
+
+  .container {
+    height: 60vh;
+  }
+  .main-container {
+    flex-direction: column;
+  }
+
+  .left-panel, .right-panel {
+    width: 100%;
+  }
+
+  .right-panel {
+    margin-top: 30px;
+  }
+
+  .statistics-container {
+    margin-top: 60px;
+    height: 100px;
+  }
+
+  .summary-section {
+    width: 87%;
+  }
+
+  .stat h3 {
+    font-size: 1.8rem;
+  }
+}

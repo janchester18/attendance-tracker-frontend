@@ -1,0 +1,61 @@
+
+
+<div class="main-container">
+  <div class="left-panel">
+    <div class="container">
+      <div class="clock-buttons-container">
+        <div class="clock-container">
+          <div class="date">{{ currentDate }}</div>
+          <div class="time">{{ currentTime }}</div>
+        </div>
+        <div class="buttons">
+          <button mat-raised-button class="clock-in-btn" color="primary" (click)="clockIn()">Clock In</button>
+          <button mat-raised-button class="start-break-btn" color="accent" (click)="startBreak()">Start Break</button>
+          <button mat-raised-button class="end-break-btn" color="warn" (click)="endBreak()">End Break</button>
+          <button mat-raised-button class="clock-out-btn" color="primary" (click)="clockOut()">Clock Out</button>
+        </div>
+      </div>
+      <div class="statistics-container">
+        <section class="summary-section">
+          <h2>Employee Summary</h2>
+          <div class="stats">
+            <div class="stat">
+              <h3>{{ totalUsers }}</h3>
+              <p>Total Employees</p>
+            </div>
+            <div class="stat">
+              <h3>{{ attendanceToday }}</h3>
+              <p>Present Today</p>
+            </div>
+            <div class="stat">
+              <h3>{{ approvedLeavesToday }}</h3>
+              <p>On Leave</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <section class="attendance-activity">
+      <h2>Recent Activities</h2>
+      <div class="log-list">
+        <div *ngFor="let record of recentAttendanceRecords" class="log-item">
+          <div class="log-details">
+            <span class="log-action">{{ record.message }}</span>
+          </div>
+        </div>
+      </div>
+      <app-custom-paginator
+      [totalRecords]="totalRecords"
+      [pageSize]="pageSize"
+      [currentPage]="currentPage"
+      (pageChange)="onPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)">
+    </app-custom-paginator>
+    </section>
+  </div>
+
+
+</div>

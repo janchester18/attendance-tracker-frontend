@@ -5,15 +5,20 @@ import {
   HttpHeaders,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, retry, throwError } from 'rxjs';
+import { catchError, map, Observable, of, retry, throwError } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
+
+interface JwtPayload {
+  "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"?: string;
+  // Include other claims as needed
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeaturesService {
-  private baseUrl = 'http://10.0.0.6:5249';
-
-  // private baseUrl = "https://67ce827a125cd5af757abfbb.mockapi.io/device/laptop";
+  // private baseUrl = 'https://10.0.0.13:7009';
+  private baseUrl = 'http://10.0.0.13:5249';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -29,6 +34,11 @@ export class FeaturesService {
 
   getSelfLeaveRequests(page: number = 1, pageSize: number = 10): Observable<any> {
     const url = `${this.baseUrl}/api/Leave/self?page=${page}&pageSize=${pageSize}`;
+    return this.sendGetRequest(url);
+  }
+
+  getAllLogs(page: number, pageSize: number): Observable<any> {
+    const url = `${this.baseUrl}/api/Log?page=${page}&pageSize=${pageSize}`;
     return this.sendGetRequest(url);
   }
 
@@ -62,6 +72,22 @@ export class FeaturesService {
     });
 
     return this.http.post(`${this.baseUrl}/api/auth/logout`, {}, { headers });
+  }
+
+  getUserRole(): Observable<string> {
+    const token = sessionStorage.getItem('auth_token');
+    if (token) {
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+        const role = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+        console.log(role);
+        return of(role || '');
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return of('');
+      }
+    }
+    return of('');
   }
 
   clockIn(latitude: number, longitude: number): Observable<any> {
@@ -184,6 +210,21 @@ export class FeaturesService {
       }),
       catchError(this.handleError)
     );
+  }
+
+  // ✅ Function to submit an overtime/leave request
+  addOvertimeRequest(leaveRequest: any): Observable<any> {
+    const token = sessionStorage.getItem('auth_token'); // Retrieve token from session
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http
+      .post<any>(`${this.baseUrl}/api/Overtime`, leaveRequest, options)
+      .pipe(retry(3), catchError(this.handleError)); // Retry 3 times & handle errors
   }
 
 
@@ -432,16 +473,22 @@ export class FeaturesService {
   //     .pipe(retry(3), catchError(this.handleError));
   // }
 
-  private handleError(error: HttpErrorResponse) {
+  private handleError(error: any) {
+    let errorMessage = 'Something bad happened; please try again later.';
+
     if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
-    } else {
-      console.error(
-        `Backend returned code ${error.status}, body was: ${error.error}`
-      );
+      // Client-side error
+      errorMessage = error.error.message;
+    } else if (error.error && error.error.message) {
+      // Error message from the backend
+      errorMessage = error.error.message;
+    } else if (error.message) {
+      // Error thrown in the map operator
+      errorMessage = error.message;
     }
-    return throwError(
-      () => new Error('Something bad happened; please try again later.')
-    );
+
+    console.error('Error:', errorMessage);
+    return throwError(() => new Error(errorMessage));
   }
+
 }

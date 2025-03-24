@@ -28,14 +28,25 @@ export class LoginComponent {
 
   login() {
     this.featuresService.login(this.email, this.password).subscribe({
-      next: () => {
+      next: (response: any) => {
+        // Assuming the response includes a property named 'role'
+        const userRole = response.role;
+        const message = response.message;
+
         this.zone.run(() => {
           this.snackbarService.showSuccess('Login successful!');
-          this.router.navigate(['/main/dashboard']);
-        })
+          if (userRole === 'Admin') {
+            this.router.navigate(['/admin/dashboard']);
+          } else if (userRole === 'Employee') {
+            this.router.navigate(['/main/dashboard']);
+          } else {
+            // Fallback if role is unrecognized
+            this.router.navigate(['/']);
+          }
+        });
       },
-      error: () => {
-        this.snackbarService.showError('Login failed. Please try again.');
+      error: (message) => {
+        this.snackbarService.showError(message);
       }
     });
   }

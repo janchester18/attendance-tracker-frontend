@@ -101,27 +101,33 @@
 @media (max-width: 768px) {
   .sidenav {
     width: 250px !important; /* ✅ Adjust width for mobile */
+    z-index: 1003 !important;
   }
 
   .sidenav-container {
     height: 100vh;
+    z-index: 1003 !important;
   }
 
   .content {
     padding: 10px;
+    z-index: 1 !important;
   }
 }
 
 @media (max-width: 1377px) {
   .sidenav {
     width: 250px !important; /* ✅ Adjust width for mobile */
+    z-index: 1003 !important;
   }
 
   .sidenav-container {
     height: 100vh;
+    z-index: 1003 !important;
   }
 
   .content {
     padding: 10px;
+    z-index: 1 !important;
   }
 }
