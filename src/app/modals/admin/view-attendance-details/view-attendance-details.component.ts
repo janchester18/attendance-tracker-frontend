@@ -1,18 +1,17 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FeaturesService } from '../../features/features.service';
-import { SnackbarService } from '../../shared/snackbar/snackbar.service';
+import { FeaturesService } from '../../../features/features.service';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
-  selector: 'app-view-leave-request',
+  selector: 'app-view-attendance-details',
   imports: [CommonModule],
-  templateUrl: './view-leave-request.component.html',
-  styleUrl: './view-leave-request.component.css',
+  templateUrl: './view-attendance-details.component.html',
+  styleUrl: './view-attendance-details.component.css',
   providers: [DatePipe],
-
 })
-export class ViewLeaveRequestComponent {
-  @Input() leaveData: any = null; // Receive overtime request data
+export class ViewAttendanceDetailsComponent {
+  @Input() attendanceData: any = null; // Receive overtime request data
   @Output() close = new EventEmitter<void>(); // Emits event to close modal
 
   constructor(

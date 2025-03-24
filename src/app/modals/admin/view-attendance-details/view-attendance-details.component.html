@@ -1,0 +1,95 @@
+<div class="view-modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+  <div class="modal-content">
+    <h2 id="modalTitle">Attendance Details</h2>
+
+    <div class="details-container">
+      <div class="details-group">
+        <label>ID:</label>
+        <p>{{ attendanceData.id }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Employee Name:</label>
+        <p>{{ attendanceData.user.name }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Email:</label>
+        <p>{{ attendanceData.user.email }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Date:</label>
+        <p>{{ attendanceData.date | date: 'MMMM dd, yyyy' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Clock In:</label>
+        <p>{{ attendanceData.clockIn ? (attendanceData.clockIn | date: 'hh:mm a') : 'N/A' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Clock Out:</label>
+        <p>{{ attendanceData.clockOut ? (attendanceData.clockOut | date: 'hh:mm a') : 'N/A' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Break Start:</label>
+        <p>{{ attendanceData.breakStart ? (attendanceData.breakStart | date: 'hh:mm a') : 'N/A' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Break Finish:</label>
+        <p>{{ attendanceData.breakFinish ? (attendanceData.breakFinish | date: 'hh:mm a') : 'N/A' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Work Duration:</label>
+        <p>{{ attendanceData.formattedWorkDuration }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Break Duration:</label>
+        <p>{{ attendanceData.formattedBreakDuration }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Late Duration:</label>
+        <p>{{ attendanceData.formattedLateDuration }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Night Differential:</label>
+        <p>{{ attendanceData.formattedNightDifDuration }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Overtime:</label>
+        <p>{{ attendanceData.formattedOvertimeDuration }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Status:</label>
+        <p [ngClass]="{'late': attendanceData.status === 'Late', 'on-time': attendanceData.status === 'On Time'}">
+          {{ attendanceData.status }}
+        </p>
+      </div>
+
+      <div class="details-group">
+        <label>Remarks:</label>
+        <p>{{ attendanceData.remarks ? attendanceData.remarks : 'N/A' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Visibility Status:</label>
+        <p>{{ attendanceData.visibilityStatus }}</p>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn close" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" (click)="closeModal()"></div>

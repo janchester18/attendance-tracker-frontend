@@ -7,9 +7,9 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { AddOvertimeRequestComponent } from '../../../modals/add-overtime-request/add-overtime-request.component';
-import { ViewOvertimeRequestComponent } from '../../../modals/view-overtime-request/view-overtime-request.component';
-import { EditOvertimeRequestComponent } from '../../../modals/edit-overtime-request/edit-overtime-request.component';
+import { AddOvertimeRequestComponent } from '../../../modals/employee/add-overtime-request/add-overtime-request.component';
+import { ViewOvertimeRequestComponent } from '../../../modals/employee/view-overtime-request/view-overtime-request.component';
+import { EditOvertimeRequestComponent } from '../../../modals/employee/edit-overtime-request/edit-overtime-request.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 
 

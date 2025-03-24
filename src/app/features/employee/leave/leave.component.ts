@@ -8,9 +8,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { AddLeaveRequestComponent } from '../../../modals/add-leave-request/add-leave-request.component';
-import { ViewLeaveRequestComponent } from '../../../modals/view-leave-request/view-leave-request.component';
-import { EditLeaveRequestComponent } from '../../../modals/edit-leave-request/edit-leave-request.component';
+import { AddLeaveRequestComponent } from '../../../modals/employee/add-leave-request/add-leave-request.component';
+import { ViewLeaveRequestComponent } from '../../../modals/employee/view-leave-request/view-leave-request.component';
+import { EditLeaveRequestComponent } from '../../../modals/employee/edit-leave-request/edit-leave-request.component';
 
 interface LeaveRecord {
   id: number;

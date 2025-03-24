@@ -191,6 +191,27 @@ export class FeaturesService {
     );
   }
 
+  updateAttendance(id: number, formData: any): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const url = `${this.baseUrl}/api/Attendance/edit-attendance/${id}`; // API endpoint with ID
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(url, formData, { headers }).pipe(
+      map(response => {
+        if (response.status === 'SUCCESS') {
+          return response;
+        } else {
+          throw new Error(response.message || 'Attendance update failed');
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   cancelLeaveRequest(id: number): Observable<any> {
     const token = sessionStorage.getItem('auth_token');
     const url = `${this.baseUrl}/api/Leave/cancel/${id}`; // API endpoint with ID
@@ -242,6 +263,11 @@ export class FeaturesService {
     return this.http
       .post<any>(`${this.baseUrl}/api/Leave`, leaveRequest, options)
       .pipe(retry(3), catchError(this.handleError)); // Retry 3 times & handle errors
+  }
+
+  getAllAttendanceHistory(page: number = 1, pageSize: number = 10): Observable<any> {
+    const url = `${this.baseUrl}/api/Attendance?page=${page}&pageSize=${pageSize}`;
+    return this.sendGetRequest(url);
   }
 
   // handleLogout() {

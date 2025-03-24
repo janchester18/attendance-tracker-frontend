@@ -1,1 +1,112 @@
-<p>attendance-records works!</p>
+<div class="attendance-container">
+  <h2>Attendance History</h2>
+  <mat-table [dataSource]="attendanceRecords" class="mat-table" matSort>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let record"> {{ record.userName }} </td>
+        </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+      <td mat-cell *matCellDef="let record"> {{ record.date | date:'MMMM dd, yyyy' }} </td>
+    </ng-container>
+
+    <!-- Clock In Column -->
+    <ng-container matColumnDef="clockIn">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Clock In </th>
+      <td mat-cell *matCellDef="let record"> {{ record.clockIn | date:'shortTime' }} </td>
+    </ng-container>
+
+    <!-- Clock Out Column -->
+    <ng-container matColumnDef="clockOut">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Clock Out </th>
+      <td mat-cell *matCellDef="let record">
+        {{ record.clockOut ? (record.clockOut | date:'shortTime') : '-' }}
+      </td>
+    </ng-container>
+
+    <!-- Work Duration Column -->
+    <ng-container matColumnDef="workDuration">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Work Duration </th>
+      <td mat-cell *matCellDef="let record"> {{ record.formattedWorkDuration }} </td>
+    </ng-container>
+
+<!--
+    <ng-container matColumnDef="breakDuration">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Break Duration </th>
+      <td mat-cell *matCellDef="let record"> {{ record.formattedBreakDuration }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lateDuration">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Late Duration </th>
+      <td mat-cell *matCellDef="let record"> {{ record.formattedLateDuration }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nightDifferential">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Night Differential </th>
+      <td mat-cell *matCellDef="let record"> {{ record.formattedNightDifDuration }} </td>
+    </ng-container> -->
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let record">
+        <span [ngClass]="{
+          'status-present': record.status === 'Present',
+          'status-absent': record.status === 'Absent',
+          'status-late': record.status === 'Late',
+          'status-leave': record.status === 'Leave'
+        }">
+          {{ record.status }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions" class="actions-column">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+      <td mat-cell *matCellDef="let record">
+        <!-- View Details Button -->
+        <button mat-icon-button color="primary" class="details-btn"
+                (click)="viewDetails(record)" matTooltip="View Details">
+          <mat-icon>info</mat-icon>
+        </button>
+
+        <!-- Edit Button (Only shown if status is Pending) -->
+        <button mat-icon-button color="warn" class="edit-btn"
+                (click)="editRecord(record)"
+                matTooltip="Edit">
+          <mat-icon>edit_note</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </mat-table>
+  <app-custom-paginator
+  [totalRecords]="totalRecords"
+  [pageSize]="pageSize"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)"
+  (pageSizeChange)="onPageSizeChange($event)">
+</app-custom-paginator>
+</div>
+
+<!-- Overtime Request Details Modal -->
+<app-view-attendance-details
+  *ngIf="isViewAttendanceModalOpen"
+  [attendanceData]="selectedAttendance"
+  (close)="closeDetailsModal()">
+</app-view-attendance-details>
+
+<app-edit-attendance *ngIf="isEditAttendanceModalOpen"
+[attendanceData]="selectedAttendance"
+(close)="closeEditModal()"
+(submitRequest)="handleSubmission($event)"
+(refreshTable)="loadAttendanceHistory()">
+
+</app-edit-attendance>

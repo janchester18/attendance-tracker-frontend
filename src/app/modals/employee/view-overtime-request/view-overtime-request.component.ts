@@ -1,7 +1,7 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FeaturesService } from '../../features/features.service';
-import { SnackbarService } from '../../shared/snackbar/snackbar.service';
+import { FeaturesService } from '../../../features/features.service';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-view-overtime-request',

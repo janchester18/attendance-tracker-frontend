@@ -1,0 +1,47 @@
+<!-- Modal Container -->
+<div class="custom-modal">
+  <div class="modal-content">
+    <h2>Edit Attendance Record</h2>
+    <form [formGroup]="attendanceForm">
+      <!-- Clock In -->
+      <div class="form-group" [ngClass]="{'error': isInvalid('clockIn')}">
+        <label>Clock In</label>
+        <input type="time" formControlName="clockIn">
+        <small *ngIf="isInvalid('clockIn')">Invalid time</small>
+      </div>
+
+      <!-- Break Start -->
+      <div class="form-group" [ngClass]="{'error': isInvalid('breakStart')}">
+        <label>Break Start</label>
+        <input type="time" formControlName="breakStart">
+        <small *ngIf="isInvalid('breakStart')">Invalid time</small>
+      </div>
+
+      <!-- Break Finish -->
+      <div class="form-group" [ngClass]="{'error': isInvalid('breakFinish')}">
+        <label>Break Finish</label>
+        <input type="time" formControlName="breakFinish">
+        <small *ngIf="isInvalid('breakFinish')">Invalid time</small>
+      </div>
+
+      <!-- Clock Out -->
+      <div class="form-group" [ngClass]="{'error': isInvalid('clockOut')}">
+        <label>Clock Out</label>
+        <input type="time" formControlName="clockOut">
+        <small *ngIf="isInvalid('clockOut')">Invalid time</small>
+      </div>
+    </form>
+
+    <p *ngIf="validationMessage" class="error-message">
+      {{ validationMessage }}
+    </p>
+
+    <div class="modal-actions">
+      <button class="btn close" (click)="closeModal()">Close</button>
+      <button class="btn submit" (click)="submit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay Background -->
+<div class="modal-overlay" (click)="closeModal()"></div>
