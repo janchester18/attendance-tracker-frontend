@@ -14,6 +14,7 @@ import { EmployeeGuard } from './employee.guard';
 import { AttendanceRecordsComponent } from './features/admin/attendance-records/attendance-records.component';
 import { OvertimeRequestsComponent } from './features/admin/overtime-requests/overtime-requests.component';
 import { LeaveRequestsComponent } from './features/admin/leave-requests/leave-requests.component';
+import { UserManagementComponent } from './features/admin/user-management/user-management.component';
 
 
 export const routes: Routes = [
@@ -41,8 +42,7 @@ export const routes: Routes = [
       { path: 'attendance-records', component: AttendanceRecordsComponent, canActivate: [authGuard, AdminGuard] },
       { path: 'overtime-requests', component: OvertimeRequestsComponent, canActivate: [authGuard, AdminGuard] },
       { path: 'leave-requests', component: LeaveRequestsComponent, canActivate: [authGuard, AdminGuard] },
-
-
+      { path: 'user-management', component: UserManagementComponent, canActivate: [authGuard, AdminGuard] },
     ],
   },
 
