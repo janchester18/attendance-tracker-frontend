@@ -18,7 +18,7 @@ interface JwtPayload {
 })
 export class FeaturesService {
   // private baseUrl = 'https://10.0.0.13:7009';
-  private baseUrl = 'http://10.0.0.13:5249';
+  private baseUrl = 'http://10.0.0.9:5249';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -39,6 +39,11 @@ export class FeaturesService {
 
   getAllLogs(page: number, pageSize: number): Observable<any> {
     const url = `${this.baseUrl}/api/Log?page=${page}&pageSize=${pageSize}`;
+    return this.sendGetRequest(url);
+  }
+
+  getAllOvertimeRequests(page: number, pageSize: number): Observable<any> {
+    const url = `${this.baseUrl}/api/Overtime?page=${page}&pageSize=${pageSize}`;
     return this.sendGetRequest(url);
   }
 
@@ -269,6 +274,51 @@ export class FeaturesService {
     const url = `${this.baseUrl}/api/Attendance?page=${page}&pageSize=${pageSize}`;
     return this.sendGetRequest(url);
   }
+
+  approveOvertime(id: number): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const url = `${this.baseUrl}/api/Overtime/approve/${id}`;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(url, {}, { headers }).pipe(
+      map(response => {
+        if (response.status === 'SUCCESS') {
+          return response;
+        } else {
+          throw new Error(response.message || 'Overtime approval failed');
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  rejectOvertime(id: number, rejectionReason: string): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const url = `${this.baseUrl}/api/Overtime/reject/${id}`; // Changed "approve" to "reject"
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    const body = { rejectionReason }; // Send rejection reason in request body
+
+    return this.http.put<any>(url, body, { headers }).pipe(
+      map(response => {
+        if (response.status === 'SUCCESS') {
+          return response;
+        } else {
+          throw new Error(response.message || 'Overtime rejection failed');
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
 
   // handleLogout() {
   //   this.logout().subscribe({

@@ -58,7 +58,7 @@ export class AttendanceRecordsComponent {
 
 displayedColumns: string[] = [
     'name', 'date', 'clockIn', 'clockOut',
-    'workDuration',  'status', 'actions'
+    'workDuration', 'overtimeDuration', 'status', 'actions'
   ];
 
   attendanceRecords = new MatTableDataSource<AttendanceTableData>([]);

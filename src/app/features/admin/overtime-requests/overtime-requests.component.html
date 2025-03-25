@@ -1,1 +1,149 @@
-<p>overtime-requests works!</p>
+<div class="attendance-container">
+
+  <div class="header-container">
+    <h2>Overtime Requests</h2>
+
+    <!-- Add Overtime Request Button
+    <button mat-raised-button color="primary" class="add-overtime-button" (click)="ApproveOvertimeModal()">
+      + Add Overtime Request
+    </button> -->
+  </div>
+
+  <div *ngIf="totalRecords === 0" class="empty-message">
+    <p>No overtime requests found.</p>
+  </div>
+
+
+
+  <mat-table [dataSource]="overtimeRecords" class="mat-table" matSort>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="employeeName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Employee Name </th>
+      <td mat-cell *matCellDef="let record"> {{ record.employeeName }} </td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+      <td mat-cell *matCellDef="let record"> {{ record.date | date:'MMMM dd, yyyy' }} </td>
+    </ng-container>
+
+    <!-- Start Time Column -->
+    <ng-container matColumnDef="startTime">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
+      <td mat-cell *matCellDef="let record"> {{ record.startTime }} </td>
+    </ng-container>
+
+    <!-- End Time Column -->
+    <ng-container matColumnDef="endTime">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
+      <td mat-cell *matCellDef="let record"> {{ record.endTime }} </td>
+    </ng-container>
+
+    <!-- Reason Column -->
+    <ng-container matColumnDef="reason">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Reason </th>
+      <td mat-cell *matCellDef="let record">
+        {{ record.reason.length > 30 ? (record.reason | slice:0:30) + '...' : record.reason }}
+      </td>
+    </ng-container>
+
+    <!-- Expected Output Column -->
+    <ng-container matColumnDef="expectedOutput">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Expected Output </th>
+      <td mat-cell *matCellDef="let record">
+        {{ record.expectedOutput.length > 30 ? (record.expectedOutput | slice:0:30) + '...' : record.expectedOutput }}
+      </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let record">
+        <span [ngClass]="{
+          'status-approved': record.status === 'Approved',
+          'status-canceled': record.status === 'Canceled',
+          'status-rejected': record.status === 'Rejected',
+          'status-pending': record.status === 'Pending',
+        }">{{ record.status }}</span>
+      </td>
+    </ng-container>
+
+
+    <!-- <ng-container matColumnDef="approverName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Reviewed By </th>
+      <td mat-cell *matCellDef="let record"> {{ record.approverName ? record.approverName : '-' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rejectionReason">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Rejection Reason </th>
+      <td mat-cell *matCellDef="let record"> {{ record.rejectionReason ? record.rejectionReason : '-' }} </td>
+    </ng-container> -->
+
+    <ng-container matColumnDef="actions" class="actions-column">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+      <td mat-cell *matCellDef="let record">
+        <!-- View Details Button -->
+        <button mat-icon-button color="primary" class="details-btn"
+                (click)="viewDetails(record)" matTooltip="View Details">
+          <mat-icon>info</mat-icon>
+        </button>
+
+        <!-- Edit Button (Only shown if status is Pending) -->
+        <button mat-icon-button color="warn" class="approve-btn"
+                *ngIf="record.status === 'Pending'" (click)="approveOvertimeConfirmation(record)"
+                matTooltip="Approve">
+          <mat-icon>check_circle</mat-icon>
+        </button>
+
+                <!-- Edit Button (Only shown if status is Pending) -->
+                <button mat-icon-button color="warn" class="reject-btn"
+                *ngIf="record.status === 'Pending'" (click)="rejectOvertimeConfirmation(record)"
+                matTooltip="Reject">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </mat-table>
+
+  <app-custom-paginator
+    [totalRecords]="totalRecords"
+    [pageSize]="pageSize"
+    [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+  </app-custom-paginator>
+</div>
+<!-- Display Modal Component -->
+<app-approve-overtime-confirmation *ngIf="isApproveOvertimeModalOpen"
+  (close)="closeModal()"
+  (submitRequest)="handleSubmission($event)"
+  [overtimeRequestData]="selectedOvertime"
+  (refreshTable)="loadOvertimeRequests()">
+</app-approve-overtime-confirmation>
+
+<app-reject-overtime *ngIf="isRejectOvertimeModalOpen"
+  (close)="closeRejectModal()"
+  (submitRequest)="handleSubmission($event)"
+  [overtimeRequestData]="selectedOvertime"
+  (refreshTable)="loadOvertimeRequests()">
+</app-reject-overtime>
+
+<!-- Overtime Request Details Modal -->
+<app-view-overtime-request
+  *ngIf="isViewOvertimeModalOpen"
+  [overtimeData]="selectedOvertime"
+  (close)="closeDetailsModal()">
+</app-view-overtime-request>
+
+<!-- Display Modal Component -->
+<app-edit-overtime-request *ngIf="isEditOvertimeModalOpen"
+[overtimeData]="selectedOvertime"
+(close)="closeEditModal()"
+(submitRequest)="handleSubmission($event)"
+(refreshTable)="loadOvertimeRequests()">
+</app-edit-overtime-request>

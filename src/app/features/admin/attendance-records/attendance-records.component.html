@@ -1,5 +1,5 @@
 <div class="attendance-container">
-  <h2>Attendance History</h2>
+  <h2>Attendance Records</h2>
   <mat-table [dataSource]="attendanceRecords" class="mat-table" matSort>
         <!-- Name Column -->
         <ng-container matColumnDef="name">
@@ -42,12 +42,12 @@
     <ng-container matColumnDef="lateDuration">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Late Duration </th>
       <td mat-cell *matCellDef="let record"> {{ record.formattedLateDuration }} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="nightDifferential">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Night Differential </th>
-      <td mat-cell *matCellDef="let record"> {{ record.formattedNightDifDuration }} </td>
     </ng-container> -->
+
+    <ng-container matColumnDef="overtimeDuration">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Overtime Duration </th>
+      <td mat-cell *matCellDef="let record"> {{ record.formattedOvertimeDuration }} </td>
+    </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="status">
