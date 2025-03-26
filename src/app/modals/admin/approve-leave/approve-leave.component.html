@@ -1,37 +1,37 @@
 <!-- Modal Container -->
 <div class="custom-modal">
   <div class="modal-content">
-    <h2>Approve Overtime Request?</h2>
+    <h2>Approve Leave Request?</h2>
 
     <!-- Request Details -->
     <div class="request-details">
         <div class="details-group">
           <label>Employee:</label>
-          <p>{{ overtimeRequestData.employeeName }}</p>
+          <p>{{ leaveRequestData.userName }}</p>
         </div>
         <div class="details-group">
-          <label>Date:</label>
-          <p>{{ overtimeRequestData.date }}</p>
+          <label>Start Date:</label>
+          <p>{{ leaveRequestData.startDate | date: 'MMMM d, y' }}</p>
         </div>
         <div class="details-group">
-          <label>Start Time:</label>
-          <p>{{ overtimeRequestData.startTime }}</p>
+          <label>End Date:</label>
+          <p>{{ leaveRequestData.endDate | date: 'MMMM d, y' }}</p>
         </div>
         <div class="details-group">
-          <label>End Time:</label>
-          <p>{{ overtimeRequestData.endTime }}</p>
+          <label>Days of Leave:</label>
+          <p>{{ leaveRequestData.daysCount }}</p>
         </div>
         <div class="details-group">
-          <label>Overtime Hours:</label>
-          <p>{{ overtimeRequestData.overtimeHours }}</p>
+          <label>Type of Leave:</label>
+          <p>{{ leaveRequestData.typeName }}</p>
         </div>
         <div class="details-group">
           <label>Reason:</label>
-          <p>{{ overtimeRequestData.reason }}</p>
+          <p>{{ leaveRequestData.reason }}</p>
         </div>
         <div class="details-group">
-          <label>Expected Output:</label>
-          <p>{{ overtimeRequestData.expectedOutput }}</p>
+          <label>Date Requested:</label>
+          <p>{{ leaveRequestData.createdDate | date: 'MMMM d, y' }}</p>
         </div>
     </div>
 <!--

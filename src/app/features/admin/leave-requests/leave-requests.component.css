@@ -1,0 +1,127 @@
+/* * {
+  border: solid red 1px;
+} */
+
+.attendance-container {
+  max-width: 100%;
+  padding: 20px;
+}
+
+::ng-deep .add-overtime-button {
+  background-color: #2196f3 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header-container h2 {
+  margin-top: 0px !important;
+}
+
+::ng-deep .mat-table {
+  width: 100% !important;
+  max-width: 100vw;
+  background: white;
+  border: solid 1px rgba(128, 128, 128, 0.3) !important;
+  border-radius: 10px;
+  overflow-x: auto;
+  table-layout: fixed !important; /* Para di lumampas sa container */
+  /* Light shadow for a subtle elevation effect */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .mat-mdc-cell {
+  width: auto !important;
+  text-align: center !important;
+  word-wrap: break-word !important;
+  white-space: normal !important; /* Para di mag-one line lang */
+}
+
+/* Override centering for the actions column */
+.mat-column-reason {
+  width: 400px;
+}
+
+.mat-column-expectedOutput {
+  width: 400px;
+}
+
+.mat-column-date {
+  min-width: 200px;
+  max-width: 1000px;
+}
+
+
+::ng-deep .mat-mdc-header-cell {
+  white-space: nowrap !important; /* Prevents text from wrapping */
+  text-align: center;
+}
+
+::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px !important;
+}
+
+th {
+  font-weight: bold;
+  background-color: #f4f4f4;
+  max-height: 1px !important;
+}
+
+::ng-deep .mat-sort-header {
+  max-height: 1px !important;
+}
+
+td {
+  padding: 10px;
+}
+
+.status-approved {
+  color: green;
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: red !important;
+  font-weight: bold !important;
+}
+
+.status-pending {
+  color: orange;
+  font-weight: bold;
+}
+
+.status-canceled {
+
+  font-weight: bold;
+}
+
+.details-btn {
+  color: #64B5F6 !important;
+}
+
+.approve-btn {
+  color: #26A69A !important; /* Teal - Softer than bright green */
+}
+
+.reject-btn {
+  color: #FF7043 !important; /* Soft Orange-Red - Less harsh than bright red */
+}
+
+/* Override centering for the actions column */
+.mat-column-actions {
+  min-width: 140px;
+  max-width: 200px;
+  text-align: left !important; /* Aligns only the actions column to the left */
+}

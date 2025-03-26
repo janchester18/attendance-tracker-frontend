@@ -18,7 +18,7 @@ interface JwtPayload {
 })
 export class FeaturesService {
   // private baseUrl = 'https://10.0.0.13:7009';
-  private baseUrl = 'http://10.0.0.9:5249';
+  private baseUrl = 'http://10.0.0.10:5249';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -44,6 +44,11 @@ export class FeaturesService {
 
   getAllOvertimeRequests(page: number, pageSize: number): Observable<any> {
     const url = `${this.baseUrl}/api/Overtime?page=${page}&pageSize=${pageSize}`;
+    return this.sendGetRequest(url);
+  }
+
+  getAllLeaveRequests(page: number, pageSize: number): Observable<any> {
+    const url = `${this.baseUrl}/api/Leave?page=${page}&pageSize=${pageSize}`;
     return this.sendGetRequest(url);
   }
 
@@ -313,6 +318,50 @@ export class FeaturesService {
           return response;
         } else {
           throw new Error(response.message || 'Overtime rejection failed');
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  approveLeave(id: number): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const url = `${this.baseUrl}/api/Leave/approve/${id}`;
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.put<any>(url, {}, { headers }).pipe(
+      map(response => {
+        if (response.status === 'SUCCESS') {
+          return response;
+        } else {
+          throw new Error(response.message || 'Leave approval failed');
+        }
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  rejectLeave(id: number, rejectionReason: string): Observable<any> {
+    const token = sessionStorage.getItem('auth_token');
+    const url = `${this.baseUrl}/api/Leave/reject/${id}`; // Changed "approve" to "reject"
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    const body = { rejectionReason }; // Send rejection reason in request body
+
+    return this.http.put<any>(url, body, { headers }).pipe(
+      map(response => {
+        if (response.status === 'SUCCESS') {
+          return response;
+        } else {
+          throw new Error(response.message || 'Leave rejection failed');
         }
       }),
       catchError(this.handleError)
