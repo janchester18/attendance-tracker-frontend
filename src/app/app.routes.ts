@@ -15,6 +15,7 @@ import { AttendanceRecordsComponent } from './features/admin/attendance-records/
 import { OvertimeRequestsComponent } from './features/admin/overtime-requests/overtime-requests.component';
 import { LeaveRequestsComponent } from './features/admin/leave-requests/leave-requests.component';
 import { UserManagementComponent } from './features/admin/user-management/user-management.component';
+import { ReportsComponent } from './features/admin/reports/reports.component';
 
 
 export const routes: Routes = [
@@ -43,6 +44,8 @@ export const routes: Routes = [
       { path: 'overtime-requests', component: OvertimeRequestsComponent, canActivate: [authGuard, AdminGuard] },
       { path: 'leave-requests', component: LeaveRequestsComponent, canActivate: [authGuard, AdminGuard] },
       { path: 'user-management', component: UserManagementComponent, canActivate: [authGuard, AdminGuard] },
+      { path: 'reports', component: ReportsComponent, canActivate: [authGuard, AdminGuard] },
+
     ],
   },
 

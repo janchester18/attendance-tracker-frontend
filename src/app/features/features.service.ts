@@ -52,6 +52,16 @@ export class FeaturesService {
     return this.sendGetRequest(url);
   }
 
+  getAllUsers(page: number, pageSize: number): Observable<any> {
+    const url = `${this.baseUrl}/api/User?page=${page}&pageSize=${pageSize}`;
+    return this.sendGetRequest(url);
+  }
+
+  getAttendanceSummary(page: number, pageSize: number, startDate: string, endDate: string): Observable<any> {
+    const url = `${this.baseUrl}/api/Attendance/summary?page=${page}&pageSize=${pageSize}&startDate=${startDate}&endDate=${endDate}`;
+    return this.sendGetRequest(url);
+  }
+
     /** 🔹 Login Function */
   login(email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/api/Auth/Login`; // Adjust if needed
@@ -366,6 +376,21 @@ export class FeaturesService {
       }),
       catchError(this.handleError)
     );
+  }
+
+  // ✅ Function to submit an overtime/leave request
+  addUser(userData: any): Observable<any> {
+    const token = sessionStorage.getItem('auth_token'); // Retrieve token from session
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http
+      .post<any>(`${this.baseUrl}/api/Auth/add-user`, userData, options)
+      .pipe(retry(3), catchError(this.handleError)); // Retry 3 times & handle errors
   }
 
 

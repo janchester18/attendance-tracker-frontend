@@ -1,1 +1,45 @@
-<p>user-management works!</p>
+<div class="container">
+  <div class="header-container">
+    <h2>Leave Requests</h2>
+
+    <!-- Add Overtime Request Button -->
+    <button mat-raised-button color="primary" class="add-overtime-button" (click)="AddEmployeeModal()">
+      + Add New User
+    </button>
+  </div>
+  <app-custom-paginator
+  [totalRecords]="totalRecords"
+  [pageSize]="pageSize"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)"
+  (pageSizeChange)="onPageSizeChange($event)">
+  </app-custom-paginator>
+
+  <div class="user-grid">
+    <div *ngFor="let user of users" class="card">
+      <div class="card-header">
+        <div class="avatar">{{ user.name.charAt(0) }}</div>
+        <div class="user-info">
+          <h3>{{ user.name }}</h3>
+          <p class="role">{{ user.role }}</p>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Phone:</strong> {{ user.phone }}</p>
+      </div>
+
+      <div class="card-footer">
+        <button class="btn" >Edit Profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-add-employee *ngIf="isAddEmployeeModalOpen"
+  (close)="closeAddEmployeeModal()"
+  (submitRequest)="handleSubmission($event)"
+  (refreshTable)="loadUsers()">
+</app-add-employee>
+
