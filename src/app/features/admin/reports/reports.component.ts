@@ -18,6 +18,8 @@ import { RejectLeaveComponent } from "../../../modals/admin/reject-leave/reject-
 import { ViewLeaveRequestComponent } from "../../../modals/employee/view-leave-request/view-leave-request.component";
 import { ViewLeaveComponent } from "../../../modals/admin/view-leave/view-leave.component";
 import { PrintSummaryComponent } from "../../../modals/admin/print-summary/print-summary.component";
+import { LoaderComponent } from "../../../shared/loader/loader.component";
+import { LoaderService } from '../../../loader.service';
 
 interface AttendanceSummary {
   userId: number;
@@ -44,7 +46,8 @@ interface AttendanceSummary {
     CustomPaginatorComponent,
     MatTooltipModule,
     RejectLeaveComponent,
-    PrintSummaryComponent
+    PrintSummaryComponent,
+    LoaderComponent
 ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css'
@@ -84,7 +87,7 @@ export class ReportsComponent implements OnInit {
     endDate = this.formatDate(new Date("2025-04-01T08:00:00Z"));
 
 
-    constructor(private featureService: FeaturesService) {}
+    constructor(private featureService: FeaturesService, private loaderService: LoaderService) {}
 
     ngOnInit(): void {
       this.loadAttendanceSummary();
@@ -100,6 +103,7 @@ export class ReportsComponent implements OnInit {
     }
 
     loadAttendanceSummary(): void {
+      this.loaderService.show();
       this.featureService.getAttendanceSummary(this.currentPage, this.pageSize, this.startDate, this.endDate)
         .subscribe(response => {
           if (response?.status === 'SUCCESS' && response.data?.attendanceSummary) {

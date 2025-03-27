@@ -21,7 +21,6 @@ import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
     MatIconModule,
     MatListModule,
     MatExpansionModule,
-    SnackbarComponent
   ],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.css'

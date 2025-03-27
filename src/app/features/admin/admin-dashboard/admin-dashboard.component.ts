@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { SnackbarComponent } from "../../../shared/snackbar/snackbar.component";
 import { Geolocation } from '@capacitor/geolocation'; // If using Capacitor for location
@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { CustomPaginatorComponent } from '../../../shared/custom-paginator/custom-paginator.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { LoaderComponent } from "../../../shared/loader/loader.component";
+import { LoaderService } from '../../../loader.service';
 
 interface AttendanceRecord {
   id: number;
@@ -22,7 +24,7 @@ interface AttendanceRecord {
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [MatButtonModule, MatTableModule, CommonModule, MatCardModule, CustomPaginatorComponent],
+  imports: [MatButtonModule, MatTableModule, CommonModule, MatCardModule, CustomPaginatorComponent, LoaderComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })
@@ -46,7 +48,11 @@ export class AdminDashboardComponent implements OnInit {
   approvedLeavesToday: number = 0;
   attendanceToday: number = 0;
 
-  constructor(private featuresService: FeaturesService, private snackbarService: SnackbarService) { }
+  constructor(
+    private featuresService: FeaturesService,
+    private snackbarService: SnackbarService,
+    private loaderService: LoaderService
+  ) { }
 
   ngOnInit(): void {
     this.updateTime();
@@ -55,40 +61,53 @@ export class AdminDashboardComponent implements OnInit {
     this.fetchAttendanceLogs();
   }
 
-  fetchAttendanceLogs(page: number = this.currentPage, pageSize: number = this.pageSize): void {
-    this.featuresService.getAllLogs(page, pageSize).subscribe(response => {
-      if (response.status === 'SUCCESS') {
-        this.recentAttendanceRecords = response.data.data.map((log: any) => {
-          const matches = log.message.match(/"([^"]+)" (.+) at/);
-          return {
-            id: log.id,
-            message: log.message,
-            timestamp: log.timestamp,
-            type: log.type,
-            employeeName: matches ? matches[1] : 'Unknown',
-            action: matches ? matches[2] : 'Unknown action',
-            time: new Date(log.timestamp)
-          };
-        });
+  fetchAttendanceLogs(page: number = this.currentPage, pageSize: number = this.pageSize, showLoader: boolean = true): void {
+    if (showLoader) {
+      this.loaderService.show();
+    }
+    this.featuresService.getAllLogs(page, pageSize).subscribe({
+      next: response => {
+        if (response.status === 'SUCCESS') {
+          this.recentAttendanceRecords = response.data.data.map((log: any) => {
+            const matches = log.message.match(/"([^"]+)" (.+) at/);
+            return {
+              id: log.id,
+              message: log.message,
+              timestamp: log.timestamp,
+              type: log.type,
+              employeeName: matches ? matches[1] : 'Unknown',
+              action: matches ? matches[2] : 'Unknown action',
+              time: new Date(log.timestamp)
+            };
+          });
 
-        // Store pagination info
-        this.totalRecords = response.data.totalRecords;
-        this.currentPage = response.data.currentPage;
-        this.pageSize = response.data.pageSize;
-        this.totalUsers = response.data.totalUsers;
-        this.attendanceToday = response.data.attendanceToday;
-        this.approvedLeavesToday = response.data.approvedLeavesToday;
+          // Update pagination info
+          this.totalRecords = response.data.totalRecords;
+          this.currentPage = response.data.currentPage;
+          this.pageSize = response.data.pageSize;
+          this.totalUsers = response.data.totalUsers;
+          this.attendanceToday = response.data.attendanceToday;
+          this.approvedLeavesToday = response.data.approvedLeavesToday;
+        }
+        if (showLoader) {
+          this.loaderService.hide();
+        }
+      },
+      error: error => {
+        console.error('Error fetching attendance logs:', error);
+        if (showLoader) {
+          this.loaderService.hide();
+        }
       }
-    }, error => {
-      console.error('Error fetching attendance logs:', error);
     });
   }
+
 
 
   // Handle Page Change
   onPageChange(newPage: number) {
     console.log('📢 Changing to Page:', newPage);
-    this.fetchAttendanceLogs(newPage, this.pageSize);
+    this.fetchAttendanceLogs(newPage, this.pageSize, false);
   }
 
   // Handle Page Size Change
@@ -96,7 +115,7 @@ export class AdminDashboardComponent implements OnInit {
     console.log('🔄 Changing Page Size:', newSize);
     this.pageSize = newSize;
     this.currentPage = 1; // Reset to first page
-    this.fetchAttendanceLogs(1, newSize);
+    this.fetchAttendanceLogs(1, newSize, false);
   }
 
 

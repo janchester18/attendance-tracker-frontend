@@ -1,3 +1,4 @@
+import { LoaderService } from './../../../loader.service';
 import { FeaturesService } from '../../features.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -10,6 +11,7 @@ import { CustomPaginatorComponent } from '../../../shared/custom-paginator/custo
 import { MatTooltip } from '@angular/material/tooltip';
 import { ViewAttendanceDetailsComponent } from '../../../modals/admin/view-attendance-details/view-attendance-details.component';
 import { EditAttendanceComponent } from '../../../modals/admin/edit-attendance/edit-attendance.component';
+import { LoaderComponent } from "../../../shared/loader/loader.component";
 
 interface AttendanceRecord {
   Date: string;
@@ -47,7 +49,7 @@ interface AttendanceTableData {
     CustomPaginatorComponent,
     MatTooltip,
     ViewAttendanceDetailsComponent,
-    EditAttendanceComponent],
+    EditAttendanceComponent, LoaderComponent],
   templateUrl: './attendance-records.component.html',
   styleUrl: './attendance-records.component.css'
 })
@@ -69,7 +71,7 @@ displayedColumns: string[] = [
     this.attendanceRecords.sort = sort;
   }
 
-  constructor(private featuresServices: FeaturesService) {} // Inject Service
+  constructor(private featuresServices: FeaturesService, private loaderService: LoaderService) {} // Inject Service
 
   totalRecords: number = 0;
   pageSize: number = 10;
@@ -80,6 +82,8 @@ displayedColumns: string[] = [
   }
 
   loadAttendanceHistory(page: number = 1, size: number = 10) {
+    this.loaderService.show();
+
     this.featuresServices.getAllAttendanceHistory(page, size).subscribe({
       next: (response: any) => {
         console.log('📦 API Response:', response);

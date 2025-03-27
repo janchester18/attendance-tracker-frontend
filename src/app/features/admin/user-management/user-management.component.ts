@@ -6,10 +6,12 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { AddEmployeeComponent } from "../../../modals/admin/add-employee/add-employee.component";
+import { LoaderComponent } from "../../../shared/loader/loader.component";
+import { LoaderService } from '../../../loader.service';
 
 @Component({
   selector: 'app-user-management',
-  imports: [CustomPaginatorComponent, CommonModule, MatButtonModule, MatIconModule, AddEmployeeComponent],
+  imports: [CustomPaginatorComponent, CommonModule, MatButtonModule, MatIconModule, AddEmployeeComponent, LoaderComponent],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css'
 })
@@ -23,7 +25,7 @@ export class UserManagementComponent {
   pageSize = 30;
   currentPage = 1;
 
-  constructor(private featureService: FeaturesService) {}
+  constructor(private featureService: FeaturesService, private loaderService: LoaderService ) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -31,6 +33,7 @@ export class UserManagementComponent {
 
   loadUsers(): void {
     this.featureService.getAllUsers(this.currentPage, this.pageSize).subscribe(response => {
+      this.loaderService.show();
       if (response.status === 'SUCCESS') {
         this.users = response.data.users.map((user: any) => ({
           id: user.id,

@@ -7,16 +7,13 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { AddOvertimeRequestComponent } from '../../../modals/employee/add-overtime-request/add-overtime-request.component';
-import { ViewOvertimeRequestComponent } from '../../../modals/employee/view-overtime-request/view-overtime-request.component';
 import { EditOvertimeRequestComponent } from '../../../modals/employee/edit-overtime-request/edit-overtime-request.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ApproveOvertimeConfirmationComponent } from "../../../modals/admin/approve-overtime-confirmation/approve-overtime-confirmation.component";
-import { RejectOvertimeComponent } from "../../../modals/admin/reject-overtime/reject-overtime.component";
 import { ApproveLeaveComponent } from "../../../modals/admin/approve-leave/approve-leave.component";
 import { RejectLeaveComponent } from "../../../modals/admin/reject-leave/reject-leave.component";
-import { ViewLeaveRequestComponent } from "../../../modals/employee/view-leave-request/view-leave-request.component";
 import { ViewLeaveComponent } from "../../../modals/admin/view-leave/view-leave.component";
+import { LoaderService } from '../../../loader.service';
+import { LoaderComponent } from "../../../shared/loader/loader.component";
 
 interface LeaveRecord {
   id: number;
@@ -49,7 +46,8 @@ interface LeaveRecord {
     MatTooltipModule,
     ApproveLeaveComponent,
     RejectLeaveComponent,
-    ViewLeaveComponent
+    ViewLeaveComponent,
+    LoaderComponent
 ],
   templateUrl: './leave-requests.component.html',
   styleUrl: './leave-requests.component.css'
@@ -81,7 +79,7 @@ isApproveLeaveModalOpen = false;
     pageSize = 10;
     currentPage = 1;
 
-    constructor(private featureService: FeaturesService) {}
+    constructor(private featureService: FeaturesService, private loaderService: LoaderService) {}
 
     ngOnInit(): void {
       this.loadLeaveRequests();
@@ -96,6 +94,8 @@ isApproveLeaveModalOpen = false;
 
     loadLeaveRequests(): void {
       this.featureService.getAllLeaveRequests(this.currentPage, this.pageSize).subscribe(response => {
+        this.loaderService.show();
+
         if (response.status === 'SUCCESS') {
           this.leaveRecords.data = response.data.leaves.map((record: LeaveRecord) => ({
             ...record,
