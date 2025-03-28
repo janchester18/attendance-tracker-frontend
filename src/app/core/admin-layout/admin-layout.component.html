@@ -1,9 +1,19 @@
 <mat-toolbar class="navbar">
+  <!-- Sidebar Toggle Button -->
   <button mat-icon-button (click)="sidenav.toggle()">
     <mat-icon style="color: white;">menu</mat-icon>
   </button>
+
+  <!-- Title -->
   <span><strong>Attendance Tracker - Admin</strong></span>
+
+  <!-- Spacer to push the notification button to the right -->
+  <span class="spacer"></span>
+
+  <!-- Notification Button -->
+  <app-notification/>
 </mat-toolbar>
+
 
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav

@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { NotificationComponent } from "../../shared/notification/notification.component";
 
 @Component({
   selector: 'app-admin-layout',
@@ -21,11 +22,14 @@ import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
     MatIconModule,
     MatListModule,
     MatExpansionModule,
-  ],
+    NotificationComponent
+],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.css'
 })
 export class AdminLayoutComponent {
+  isNotificationPanelOpen = false;
+
   isMobile = window.innerWidth < 768; // ✅ Detect initial screen size
   // ✅ Update `isMobile` on window resize
   @HostListener('window:resize', ['$event'])
@@ -40,5 +44,9 @@ export class AdminLayoutComponent {
 
   onLogout() {
     this.featureService.handleLogout();
+  }
+
+  openNotifications() {
+    this.isNotificationPanelOpen = !this.isNotificationPanelOpen;
   }
 }

@@ -11,6 +11,8 @@ import { AddOvertimeRequestComponent } from '../../../modals/employee/add-overti
 import { ViewOvertimeRequestComponent } from '../../../modals/employee/view-overtime-request/view-overtime-request.component';
 import { EditOvertimeRequestComponent } from '../../../modals/employee/edit-overtime-request/edit-overtime-request.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { LoaderComponent } from "../../../shared/loader/loader.component";
+import { LoaderService } from '../../../loader.service';
 
 
 interface OvertimeRecord {
@@ -44,8 +46,9 @@ interface OvertimeRecord {
     AddOvertimeRequestComponent,
     ViewOvertimeRequestComponent,
     EditOvertimeRequestComponent,
-    MatTooltipModule
-  ],
+    MatTooltipModule,
+    LoaderComponent
+],
   templateUrl: './overtime.component.html',
   styleUrls: ['./overtime.component.css']
 })
@@ -74,7 +77,7 @@ export class OvertimeComponent implements OnInit {
   pageSize = 10;
   currentPage = 1;
 
-  constructor(private featureService: FeaturesService) {}
+  constructor(private featureService: FeaturesService, private loaderService: LoaderService) {}
 
   ngOnInit(): void {
     this.loadOvertimeRequests();
@@ -88,6 +91,7 @@ export class OvertimeComponent implements OnInit {
   }
 
   loadOvertimeRequests(): void {
+    this.loaderService.show();
     this.featureService.getSelfOvertimeRequests(this.currentPage, this.pageSize).subscribe(response => {
       if (response.status === 'SUCCESS') {
         this.overtimeRecords.data = response.data.overtime.map((record: OvertimeRecord) => ({

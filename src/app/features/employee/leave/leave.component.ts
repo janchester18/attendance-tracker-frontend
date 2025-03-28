@@ -11,6 +11,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { AddLeaveRequestComponent } from '../../../modals/employee/add-leave-request/add-leave-request.component';
 import { ViewLeaveRequestComponent } from '../../../modals/employee/view-leave-request/view-leave-request.component';
 import { EditLeaveRequestComponent } from '../../../modals/employee/edit-leave-request/edit-leave-request.component';
+import { LoaderComponent } from "../../../shared/loader/loader.component";
+import { LoaderService } from '../../../loader.service';
 
 interface LeaveRecord {
   id: number;
@@ -43,8 +45,9 @@ interface LeaveRecord {
     AddLeaveRequestComponent,
     ViewLeaveRequestComponent,
     EditLeaveRequestComponent,
-    MatTooltipModule
-  ],
+    MatTooltipModule,
+    LoaderComponent
+],
   templateUrl: './leave.component.html',
   styleUrl: './leave.component.css'
 })
@@ -73,7 +76,7 @@ export class LeaveComponent {
   pageSize = 10;
   currentPage = 1;
 
-  constructor(private featureService: FeaturesService) {}
+  constructor(private featureService: FeaturesService, private loaderService: LoaderService) {}
 
   ngOnInit(): void {
     this.loadLeaveRequests();
@@ -88,6 +91,7 @@ export class LeaveComponent {
 
   loadLeaveRequests(): void {
     this.featureService.getSelfLeaveRequests(this.currentPage, this.pageSize).subscribe(response => {
+      this.loaderService.show();
       if (response.status === 'SUCCESS') {
         this.leaveRecords.data = response.data.leave.map((record: LeaveRecord) => ({
           ...record,

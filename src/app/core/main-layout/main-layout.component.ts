@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { NotificationComponent } from "../../shared/notification/notification.component";
 
 @Component({
   selector: 'app-layout',
@@ -22,8 +23,9 @@ import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
     MatIconModule,
     MatListModule,
     MatExpansionModule,
-    SnackbarComponent
-  ],
+    SnackbarComponent,
+    NotificationComponent
+],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css'
 })

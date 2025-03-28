@@ -1,3 +1,4 @@
+import { LoaderService } from './../../../loader.service';
 import { FeaturesService } from '../../features.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -7,6 +8,7 @@ import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CustomPaginatorComponent } from '../../../shared/custom-paginator/custom-paginator.component';
+import { LoaderComponent } from "../../../shared/loader/loader.component";
 
 interface AttendanceRecord {
   Date: string;
@@ -34,15 +36,14 @@ interface AttendanceTableData {
   selector: 'app-attendance-history',
   standalone: true, // Add this line
   templateUrl: './attendance-history.component.html',
-  imports: [    CommonModule,
+  imports: [CommonModule,
     MatTableModule,
     MatSortModule,
     MatButtonModule,
     MatIconModule,
     MatSort,
     MatPaginatorModule,
-    CustomPaginatorComponent
-    ],
+    CustomPaginatorComponent, LoaderComponent],
   styleUrls: ['./attendance-history.component.css']
 })
 export class AttendanceHistoryComponent implements OnInit{
@@ -60,7 +61,7 @@ export class AttendanceHistoryComponent implements OnInit{
     this.attendanceRecords.sort = sort;
   }
 
-  constructor(private featuresServices: FeaturesService) {} // Inject Service
+  constructor(private featuresServices: FeaturesService, private loaderService: LoaderService) {} // Inject Service
 
   totalRecords: number = 0;
   pageSize: number = 10;
@@ -71,6 +72,7 @@ export class AttendanceHistoryComponent implements OnInit{
   }
 
   loadAttendanceHistory(page: number = 1, size: number = 10) {
+    this.loaderService.show();
     this.featuresServices.getSelfAttendanceHistory(page, size).subscribe({
       next: (response: any) => {
         console.log('📦 API Response:', response);

@@ -9,8 +9,26 @@ export const loaderInterceptor: HttpInterceptorFn = (
   next: HttpHandlerFn
 ): Observable<HttpEvent<any>> => {
   const loaderService = inject(LoaderService);
-  loaderService.show();
+  const apiUrl = req.url.toLowerCase(); // Normalize case
+
+  // List of URLs that should not trigger the loader
+  const excludedUrls = [
+    'http://10.0.0.10:5249/api/notification/self',
+    'http://10.0.0.10:5249/api/notification/view'
+  ];
+
+  // Check if request URL starts with any of the excluded URLs
+  if (!excludedUrls.some(url => apiUrl.startsWith(url))) {
+    loaderService.show();
+  }
+
   return next(req).pipe(
-    finalize(() => loaderService.hide())
+    finalize(() => {
+      if (!excludedUrls.some(url => apiUrl.startsWith(url))) {
+        loaderService.hide();
+      }
+    })
   );
 };
+
+

@@ -78,3 +78,10 @@ td {
   color: blue;
   font-weight: bold;
 }
+
+.empty-message {
+  text-align: center;
+  font-size: 16px;
+  color: gray;
+  margin: 20px 0;
+}

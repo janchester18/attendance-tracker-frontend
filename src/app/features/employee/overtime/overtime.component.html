@@ -1,3 +1,5 @@
+<app-loader/>
+
 <div class="attendance-container">
 
   <div class="header-container">
@@ -13,8 +15,7 @@
     <p>No overtime requests found.</p>
   </div>
 
-
-
+<div class="hide" *ngIf="totalRecords > 0">
   <mat-table [dataSource]="overtimeRecords" class="mat-table" matSort>
 
     <!-- Date Column -->
@@ -91,7 +92,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </mat-table>
-
   <app-custom-paginator
     [totalRecords]="totalRecords"
     [pageSize]="pageSize"
@@ -99,6 +99,9 @@
     (pageChange)="onPageChange($event)"
     (pageSizeChange)="onPageSizeChange($event)">
   </app-custom-paginator>
+</div>
+
+
 </div>
 <!-- Display Modal Component -->
 <app-add-overtime-request *ngIf="isAddOvertimeModalOpen"

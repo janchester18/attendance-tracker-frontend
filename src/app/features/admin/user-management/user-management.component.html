@@ -30,10 +30,16 @@
       <div class="card-body">
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>Phone:</strong> {{ user.phone }}</p>
+        <p><strong>Overtime Hours:</strong> {{ user.overtimeHours }}</p>
       </div>
 
       <div class="card-footer">
-        <button class="btn" >Edit Profile</button>
+        <button class="mpl-btn" [disabled]="user.overtimeHours < 8"><mat-icon>autorenew</mat-icon>
+          Convert to MPL
+        </button>
+        <button class="btn" ><mat-icon>edit</mat-icon>
+          Edit Profile
+        </button>
       </div>
     </div>
   </div>

@@ -1,0 +1,17 @@
+<mat-dialog-content *ngIf="!loading; else loadingState">
+  <h2>{{ notificationDetails.title }}</h2>
+  <p>{{ notificationDetails.message }}</p>
+
+  <small>{{ notificationDetails.createdAt | date: 'MM-dd-yyyy hh:mm a' }}</small>
+</mat-dialog-content>
+
+<ng-template #loadingState>
+  <div class="loading-container">
+    <mat-spinner diameter="30"></mat-spinner>
+    <p>Loading...</p>
+  </div>
+</ng-template>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="closeModal()">Close</button>
+</mat-dialog-actions>

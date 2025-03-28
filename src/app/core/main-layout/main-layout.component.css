@@ -98,6 +98,10 @@
   mix-blend-mode: multiply;
 }
 
+.spacer {
+  flex: 1;
+}
+
 @media (max-width: 768px) {
   .sidenav {
     width: 250px !important; /* ✅ Adjust width for mobile */

@@ -41,6 +41,7 @@ export class UserManagementComponent {
           email: user.email,
           phone: user.phone,
           role: user.role,
+          overtimeHours: user.overtimeHours,
           accumulatedOvertime: user.accumulatedOvertime
         }));
         this.totalRecords = response.data.totalRecords;

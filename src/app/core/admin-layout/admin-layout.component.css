@@ -14,6 +14,7 @@
 ::ng-deep .mat-drawer {
   z-index: 999 !important;
   position: relative; /* ✅ Ensures child elements respect z-index */
+
 }
 
 ::ng-deep .mat-drawer-inner-container,
@@ -21,6 +22,7 @@
   z-index: 999 !important;
   position: relative; /* ✅ Ensures child elements respect z-index */
   border-top-right-radius: 0 !important;
+
 }
 
 .sidenav-container,
@@ -35,10 +37,14 @@
   width: 15% !important;
   z-index: 1   !important;
   position: absolute;
+  overflow-y: auto;  /* Enable vertical scrolling */
+
 }
 
 .sidenav-list ::ng-deep .mat-icon {
   margin-right: 10px;
+  overflow-y: auto;  /* Enable vertical scrolling */
+
 }
 
 ::ng-deep .mat-expansion-panel {
@@ -96,6 +102,10 @@
   align-self: center;
   align-items: center;
   mix-blend-mode: multiply;
+}
+
+.spacer {
+  flex: 1;
 }
 
 @media (max-width: 768px) {

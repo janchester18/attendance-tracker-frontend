@@ -1,9 +1,10 @@
+import "./chunk-M3HR6BUY.js";
 import {
   BidiModule,
   DIR_DOCUMENT,
   Dir,
   Directionality
-} from "./chunk-CLG3Y7KA.js";
+} from "./chunk-XC4JDDEO.js";
 import "./chunk-G65P7DDA.js";
 import "./chunk-SK5KBZ3U.js";
 import "./chunk-PEBH6BBU.js";

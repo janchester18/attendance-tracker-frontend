@@ -4,11 +4,13 @@ import { SnackbarComponent } from "../../../shared/snackbar/snackbar.component";
 import { Geolocation } from '@capacitor/geolocation'; // If using Capacitor for location
 import { FeaturesService } from '../../features.service';
 import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { LoaderComponent } from "../../../shared/loader/loader.component";
+import { LoaderService } from '../../../loader.service';
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatButtonModule, SnackbarComponent, SnackbarComponent],
+  imports: [MatButtonModule, SnackbarComponent, SnackbarComponent, LoaderComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -16,7 +18,8 @@ export class DashboardComponent implements OnInit {
   currentDate: string = '';
   currentTime: string = '';
 
-  constructor(private featuresService: FeaturesService, private snackbarService: SnackbarService) {}
+  constructor(private featuresService: FeaturesService,
+    private snackbarService: SnackbarService, private loaderService: LoaderService) {}
 
   ngOnInit(): void {
     this.updateTime();
@@ -46,6 +49,7 @@ export class DashboardComponent implements OnInit {
 
   async clockIn() {
     try {
+      this.loaderService.show();
       // Get user's location
       const coordinates = await Geolocation.getCurrentPosition();
       const latitude = coordinates.coords.latitude;
@@ -77,6 +81,8 @@ export class DashboardComponent implements OnInit {
 
 
   startBreak() {
+    this.loaderService.show();
+
     this.featuresService.startBreak().subscribe({
         next: (response) => {
             this.snackbarService.showSuccess(response.message);
@@ -88,6 +94,8 @@ export class DashboardComponent implements OnInit {
   }
 
   endBreak() {
+    this.loaderService.show();
+
     this.featuresService.endBreak().subscribe({
         next: (response) => {
           this.snackbarService.showSuccess(response.message);
@@ -100,6 +108,8 @@ export class DashboardComponent implements OnInit {
   }
 
   clockOut() {
+    this.loaderService.show();
+
     this.featuresService.clockOut().subscribe({
       next: (response) => {
         this.snackbarService.showSuccess(response.message);

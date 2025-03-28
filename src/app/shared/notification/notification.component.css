@@ -1,0 +1,20 @@
+.notification-menu {
+  max-height: 50vh; /* Adjust as needed */
+  overflow-x: none;
+}
+
+.notification-container {
+  max-height: 50vh; /* Allows scrolling inside the menu */
+  overflow-y: auto;
+  overflow-x: none;
+  width: 250px; /* Adjust width as needed */
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 10px;
+}
+
+button {
+  margin-right: 10px;
+}

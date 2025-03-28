@@ -62,6 +62,16 @@ export class FeaturesService {
     return this.sendGetRequest(url);
   }
 
+  getSelfNotifications(page: number, pageSize: number): Observable<any> {
+    const url = `${this.baseUrl}/api/Notification/self?page=${page}&pageSize=${pageSize}`;
+    return this.sendGetRequest(url);
+  }
+
+  getNotificationDetails(notificationId: string): Observable<any> {
+    const url = `${this.baseUrl}/api/Notification/view/${notificationId}`;
+    return this.sendGetRequest(url);
+  }
+
     /** 🔹 Login Function */
   login(email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/api/Auth/Login`; // Adjust if needed

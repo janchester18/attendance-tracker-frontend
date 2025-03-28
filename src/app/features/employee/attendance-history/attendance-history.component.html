@@ -1,5 +1,13 @@
+<app-loader/>
+
 <div class="attendance-container">
   <h2>Attendance History</h2>
+
+  <div *ngIf="totalRecords === 0" class="empty-message">
+    <p>No Leave requests found.</p>
+  </div>
+
+<div class="hide" *ngIf="totalRecords > 0">
   <mat-table [dataSource]="attendanceRecords" class="mat-table" matSort>
     <!-- Date Column -->
     <ng-container matColumnDef="date">
@@ -71,4 +79,7 @@
   (pageChange)="onPageChange($event)"
   (pageSizeChange)="onPageSizeChange($event)">
 </app-custom-paginator>
+</div>
+
+
 </div>
