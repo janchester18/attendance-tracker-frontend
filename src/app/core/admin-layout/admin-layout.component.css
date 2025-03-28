@@ -34,11 +34,11 @@
 }
 
 .sidenav {
-  width: 15% !important;
-  z-index: 1   !important;
-  position: absolute;
+  width: 16% !important;
+  z-index: 1 !important;
+  /* Remove position: absolute */
   overflow-y: auto;  /* Enable vertical scrolling */
-
+  height: 100%; /* Use full height of the sidenav container */
 }
 
 .sidenav-list ::ng-deep .mat-icon {

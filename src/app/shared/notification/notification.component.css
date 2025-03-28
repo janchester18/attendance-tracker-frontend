@@ -1,16 +1,18 @@
 .notification-menu {
   max-height: 50vh; /* Adjust as needed */
-  overflow-x: none;
+  overflow-x: hidden;
 }
 
 .notification-container {
   max-height: 50vh; /* Allows scrolling inside the menu */
   overflow-y: auto;
-  overflow-x: none;
+  overflow-x: hidden;
   width: 250px; /* Adjust width as needed */
 }
 
 .loading-indicator {
+  display: flex;
+  justify-content: center;
   text-align: center;
   padding: 10px;
 }

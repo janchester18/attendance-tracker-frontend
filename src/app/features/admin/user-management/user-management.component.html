@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="header-container">
-    <h2>Leave Requests</h2>
+    <h2>User Management</h2>
 
     <!-- Add Overtime Request Button -->
     <button mat-raised-button color="primary" class="add-overtime-button" (click)="AddEmployeeModal()">
@@ -34,7 +34,7 @@
       </div>
 
       <div class="card-footer">
-        <button class="mpl-btn" [disabled]="user.overtimeHours < 8"><mat-icon>autorenew</mat-icon>
+        <button class="mpl-btn" (click)="ConvertMplModal(user)" [disabled]="user.overtimeHours < 8"><mat-icon>autorenew</mat-icon>
           Convert to MPL
         </button>
         <button class="btn" ><mat-icon>edit</mat-icon>
@@ -50,4 +50,11 @@
   (submitRequest)="handleSubmission($event)"
   (refreshTable)="loadUsers()">
 </app-add-employee>
+
+<app-convert-mpl *ngIf="isConvertMplModalOpen"
+  (close)="closeConvertMplModal()"
+  (submitRequest)="handleSubmission($event)"
+  [userData] = "selectedUser"
+  (refreshTable)="loadUsers()">
+</app-convert-mpl>
 

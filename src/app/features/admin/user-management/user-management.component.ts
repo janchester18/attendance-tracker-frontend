@@ -1,3 +1,4 @@
+import { ConvertMplComponent } from './../../../modals/admin/convert-mpl/convert-mpl.component';
 import { Component, ViewChild } from '@angular/core';
 import { CustomPaginatorComponent } from "../../../shared/custom-paginator/custom-paginator.component";
 import { MatPaginator } from '@angular/material/paginator';
@@ -11,12 +12,14 @@ import { LoaderService } from '../../../loader.service';
 
 @Component({
   selector: 'app-user-management',
-  imports: [CustomPaginatorComponent, CommonModule, MatButtonModule, MatIconModule, AddEmployeeComponent, LoaderComponent],
+  imports: [CustomPaginatorComponent, CommonModule, MatButtonModule, MatIconModule, AddEmployeeComponent, LoaderComponent, ConvertMplComponent],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css'
 })
 export class UserManagementComponent {
   isAddEmployeeModalOpen = false;
+  isConvertMplModalOpen = false;
+  selectedUser: any; // Declare selectedUser property
 
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
@@ -65,6 +68,27 @@ export class UserManagementComponent {
 
     setTimeout(() => {
       this.isAddEmployeeModalOpen = false; // Hide modal after animation
+    }, 100);
+  }
+
+  ConvertMplModal(selectedUser: any) {
+    this.isConvertMplModalOpen = true;
+    this.selectedUser = selectedUser;
+    console.log("Selected User:", selectedUser);
+    console.log("Convert MPL Modal Opened");
+    setTimeout(() => {
+      document.querySelector('.custom-modal')?.classList.add('show');
+      document.querySelector('.modal-overlay')?.classList.add('show');
+    }, 10);
+  }
+
+  closeConvertMplModal() {
+    document.querySelector('.custom-modal')?.classList.add('hide');
+    document.querySelector('.modal-overlay')?.classList.add('hide');
+
+    setTimeout(() => {
+      this.selectedUser = null; // Clear selected user
+      this.isConvertMplModalOpen = false; // Hide modal after animation
     }, 100);
   }
 

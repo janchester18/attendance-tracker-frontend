@@ -63,7 +63,7 @@ export class FeaturesService {
   }
 
   getSelfNotifications(page: number, pageSize: number): Observable<any> {
-    const url = `${this.baseUrl}/api/Notification/self?page=${page}&pageSize=${pageSize}`;
+    const url = `${this.baseUrl}/api/Notification/self/attendance?page=${page}&pageSize=${pageSize}`;
     return this.sendGetRequest(url);
   }
 
@@ -400,6 +400,20 @@ export class FeaturesService {
 
     return this.http
       .post<any>(`${this.baseUrl}/api/Auth/add-user`, userData, options)
+      .pipe(retry(3), catchError(this.handleError)); // Retry 3 times & handle errors
+  }
+
+  convertToMpl(id: number, mplRequest: any): Observable<any> {
+    const token = sessionStorage.getItem('auth_token'); // Retrieve token from session
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http
+      .post<any>(`${this.baseUrl}/api/OvertimeMpl/${id}`, mplRequest, options)
       .pipe(retry(3), catchError(this.handleError)); // Retry 3 times & handle errors
   }
 
