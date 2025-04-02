@@ -1,20 +1,35 @@
-<!-- Notification Menu with Scrollable Container -->
 <mat-menu #notificationMenu="matMenu" class="notification-menu">
-  <div class="notification-container" (scroll)="onScroll($event)">
+  <div class="notification-container"
+      (touchstart)="onTouchStart($event)"
+      (touchmove)="onTouchMove($event)"
+      (touchend)="onTouchEnd()"
+      (scroll)="onScroll($event)">
+
+    <!-- Pull-to-Refresh Indicator (Shown when refreshing) -->
+    <div class="refresh-indicator" *ngIf="isRefreshing">
+      <mat-spinner diameter="20"></mat-spinner> Refreshing...
+    </div>
+
     <ng-container *ngIf="notifications.length > 0; else noNotifications">
       <button mat-menu-item *ngFor="let notification of notifications" (click)="openNotificationModal(notification.id)">
-        <mat-icon>notifications</mat-icon> {{ notification.title }}<br/><span>{{ notification.createdAt | date: 'MM-dd-yyyy' }}</span>
-
+        <mat-icon>notifications</mat-icon> {{ notification.title }}<br/>
+        <span>{{ notification.createdAt | date: 'MM-dd-yyyy' }}</span>
       </button>
+
+      <!-- Loading More Indicator -->
       <div *ngIf="loadingMore" class="loading-indicator">
         <mat-spinner diameter="20"></mat-spinner>
       </div>
     </ng-container>
+
   </div>
+
   <ng-template #noNotifications>
     <button mat-menu-item disabled>No new notifications</button>
   </ng-template>
 </mat-menu>
+
+
 
 <!-- Notification Button -->
 <button mat-icon-button [matMenuTriggerFor]="notificationMenu" matBadge="{{ unreadCount }}" matBadgeColor="warn">

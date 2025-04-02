@@ -18,7 +18,7 @@ interface JwtPayload {
 })
 export class FeaturesService {
   // private baseUrl = 'https://10.0.0.13:7009';
-  private baseUrl = 'http://10.0.0.10:5249';
+  private baseUrl = 'http://10.0.0.12:5249';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -58,7 +58,7 @@ export class FeaturesService {
   }
 
   getAttendanceSummary(page: number, pageSize: number, startDate: string, endDate: string): Observable<any> {
-    const url = `${this.baseUrl}/api/Attendance/summary?page=${page}&pageSize=${pageSize}&startDate=${startDate}&endDate=${endDate}`;
+    const url = `${this.baseUrl}/api/Attendance/full-summary?page=${page}&pageSize=${pageSize}&startDate=${startDate}&endDate=${endDate}`;
     return this.sendGetRequest(url);
   }
 

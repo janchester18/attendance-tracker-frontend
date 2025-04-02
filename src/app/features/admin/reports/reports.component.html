@@ -5,16 +5,15 @@
   <div class="header-container">
     <h2>Reports</h2>
 
-    <!-- <button mat-raised-button color="primary" class="add-overtime-button">
+
+    <button mat-raised-button color="primary" class="add-overtime-button" (click)="openPrintAllSummaries()" matTooltip="Print Employee Summary">
       + Print Summary
-    </button> -->
+    </button>
   </div>
 
   <div *ngIf="totalRecords === 0" class="empty-message">
     <p>No data found.</p>
   </div>
-
-
 
   <mat-table [dataSource]="attendanceSummary" class="mat-table" matSort>
 
@@ -45,7 +44,7 @@
     <!-- Late Arrivals Column -->
     <ng-container matColumnDef="lateArrivals">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Late Arrivals </th>
-      <td mat-cell *matCellDef="let record"> {{ record.lateArrivals }} </td>
+      <td mat-cell *matCellDef="let record"> {{ record.rawLateCount }} </td>
     </ng-container>
 
     <!-- Early Departures Column -->
@@ -111,12 +110,19 @@
   </app-custom-paginator>
 </div>
 
-<!-- Display Modal Component -->
-<app-print-summary *ngIf="isPrintSummaryModalOpen"
-  (close)="closePrintSummaryModal()"
-  [leaveRequestData]="selectedSummary"
-  (refreshTable)="loadAttendanceSummary()">
+<!-- Pass the selected record to the child modal component -->
+<!-- Pass the selected record and modal visibility state to the child modal component -->
+<app-print-summary
+  *ngIf="isPrintSummaryModalOpen"
+  [record]="selectedSummary"
+  (close)="closePrintSummaryModal()">
 </app-print-summary>
+
+<app-print-emp-summary
+  *ngIf="isPrintAllSummariesModalOpen"
+  [allSummaries]="attendanceSummary.data"
+  (close)="closePrintAllSummaries()">
+</app-print-emp-summary>
 
 <app-reject-leave *ngIf="isPrintEmpSummaryModalOpen"
   (close)="closeEmpSumModal()"

@@ -20,6 +20,7 @@ import { ViewLeaveComponent } from "../../../modals/admin/view-leave/view-leave.
 import { PrintSummaryComponent } from "../../../modals/admin/print-summary/print-summary.component";
 import { LoaderComponent } from "../../../shared/loader/loader.component";
 import { LoaderService } from '../../../loader.service';
+import { PrintEmpSummaryComponent } from "../../../modals/admin/print-emp-summary/print-emp-summary.component";
 
 interface AttendanceSummary {
   userId: number;
@@ -27,11 +28,33 @@ interface AttendanceSummary {
   daysPresent: number;
   daysAbsent: number;
   daysOnLeave: number;
-  lateArrivals: number;
+  lateArrivals: LateArrival[];
   earlyDepartures: number;
-  totalWorkHours: number;
-  otHours: number;
-  nightDiffHours: number;
+  totalWorkHours: string;
+  overtimeEntries: OvertimeEntry[];
+  rawLateCount: number;
+  rawLateTime: string;
+  otHours: string;
+  finalOTHours: string;
+  nightDiffHours: string;
+  finalLates: number;
+  finalLateTime: string;
+  mpLsConverted: number;
+  mpLsConvertedHours: string;
+  startDate: string;
+  endDate: string;
+}
+
+interface LateArrival {
+  clockIn: string;
+  lateDuration: string;
+  isOffseted: boolean;
+}
+
+interface OvertimeEntry {
+  date: string;
+  overtimeDuration: string;
+  reason: string | null;
 }
 
 @Component({
@@ -47,12 +70,15 @@ interface AttendanceSummary {
     MatTooltipModule,
     RejectLeaveComponent,
     PrintSummaryComponent,
-    LoaderComponent
+    LoaderComponent,
+    PrintEmpSummaryComponent
 ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css'
 })
 export class ReportsComponent implements OnInit {
+  // Add a new flag for the print-all modal
+    isPrintAllSummariesModalOpen = false;
     isPrintSummaryModalOpen = false;
     isPrintEmpSummaryModalOpen = false;
     selectedSummary: AttendanceSummary | null = null;
@@ -83,16 +109,16 @@ export class ReportsComponent implements OnInit {
       return date.toISOString().split('T')[0]; // Extract only YYYY-MM-DD
     }
 
-    startDate = this.formatDate(new Date("2025-03-01T08:00:00Z"));
-    endDate = this.formatDate(new Date("2025-04-01T08:00:00Z"));
+    startDate = this.formatDate(new Date("2025-03-16T08:00:00Z"));
+    endDate = this.formatDate(new Date("2025-04-15T08:00:00Z"));
 
 
     constructor(private featureService: FeaturesService, private loaderService: LoaderService) {}
 
     ngOnInit(): void {
       this.loadAttendanceSummary();
-      console.log(this.startDate); // "2025-03-01"
-      console.log(this.endDate);   // "2025-04-01"
+      console.log(this.startDate);
+      console.log(this.endDate);
     }
 
     ngAfterViewInit() {
@@ -139,6 +165,8 @@ export class ReportsComponent implements OnInit {
     printSummary(record: AttendanceSummary) {
       this.selectedSummary = record;
       this.isPrintSummaryModalOpen = true;
+      console.log('Printing Summary:', this.selectedSummary);
+      // Wait 10ms to add the "show" classes (to allow Angular to update the DOM)
       setTimeout(() => {
         document.querySelector('.custom-modal')?.classList.add('show');
         document.querySelector('.modal-overlay')?.classList.add('show');
@@ -146,12 +174,35 @@ export class ReportsComponent implements OnInit {
     }
 
     closePrintSummaryModal() {
+     // Remove "show" classes to trigger your hide animation
       document.querySelector('.custom-modal')?.classList.add('hide');
       document.querySelector('.modal-overlay')?.classList.add('hide');
 
+      // Wait 100ms for the animation to complete before resetting the state
       setTimeout(() => {
         this.selectedSummary = null;
         this.isPrintSummaryModalOpen = false;
+      }, 100);
+    }
+
+    openPrintAllSummaries() {
+      this.isPrintAllSummariesModalOpen = true;
+      console.log('Printing Summary:', this.selectedSummary);
+      // Wait 10ms to add the "show" classes (to allow Angular to update the DOM)
+      setTimeout(() => {
+        document.querySelector('.custom-modal')?.classList.add('show');
+        document.querySelector('.modal-overlay')?.classList.add('show');
+      }, 10);
+    }
+
+    closePrintAllSummaries() {
+     // Remove "show" classes to trigger your hide animation
+      document.querySelector('.custom-modal')?.classList.add('hide');
+      document.querySelector('.modal-overlay')?.classList.add('hide');
+
+      // Wait 100ms for the animation to complete before resetting the state
+      setTimeout(() => {
+        this.isPrintAllSummariesModalOpen = false;
       }, 100);
     }
 

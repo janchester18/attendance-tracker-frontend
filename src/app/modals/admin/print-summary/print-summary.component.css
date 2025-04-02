@@ -1,11 +1,11 @@
-/* Modal Styles */
 .custom-modal {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
   width: 90%;
-  max-width: 500px;
+  max-width: 1500px;
+  max-height: 90vh; /* Limit the maximum height to 90% of the viewport height */
   background: linear-gradient(180deg, #fff, #fafafa);
   padding: 24px;
   border-radius: 12px;
@@ -15,16 +15,23 @@
   opacity: 0;
   visibility: hidden;
   transition: transform 0.2s ease-out, opacity 0.2s ease-out;
-  overflow: auto;
+  overflow: auto; /* Enable scrolling in both directions */
   padding-right: 48px;
   margin-left: 10px;
   margin-right: 10px;
 }
 
+
 /* Form Styles */
 .form-group {
   margin-bottom: 16px;
   text-align: left;
+}
+
+.top-part {
+  display: flex;
+  align-items: center; /* vertically centers items */
+  justify-content: space-between; /* pushes items to the edges */
 }
 
 /* Mobile Adjustments */
@@ -365,5 +372,29 @@ input[type="time"] {
 
   .modal-content h2 {
     font-size: 1.3rem;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+th {
+  background-color: #f2f2f2;
+}
+.highlight {
+  background-color: #ffeb3b;
+}
+
+@media print {
+  .modal-actions,
+  .modal-overlay {
+    display: none !important;
   }
 }

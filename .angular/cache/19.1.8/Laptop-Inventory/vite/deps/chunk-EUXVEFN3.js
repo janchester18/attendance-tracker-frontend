@@ -2,7 +2,7 @@ import {
   Platform,
   coerceElement,
   coerceNumberProperty
-} from "./chunk-2B7TSX2A.js";
+} from "./chunk-Q62YDRJG.js";
 import {
   BidiModule
 } from "./chunk-XC4JDDEO.js";
@@ -5374,14 +5374,8 @@ var _MatInternalFormField = class __MatInternalFormField {
 })();
 
 export {
-  _bindEventWithOptions,
-  _getFocusedElementPierceShadowDom,
-  _getEventTarget,
-  _isTestEnvironment,
-  _CdkPrivateStyleLoader,
-  coerceCssPixelValue,
-  coerceArray,
-  _IdGenerator,
+  isFakeMousedownFromScreenReader,
+  isFakeTouchstartFromScreenReader,
   ENTER,
   ESCAPE,
   SPACE,
@@ -5390,24 +5384,30 @@ export {
   RIGHT_ARROW,
   DOWN_ARROW,
   A,
-  hasModifierKey,
-  isFakeMousedownFromScreenReader,
-  isFakeTouchstartFromScreenReader,
+  _getFocusedElementPierceShadowDom,
+  _getEventTarget,
+  _bindEventWithOptions,
   normalizePassiveListenerOptions,
   FocusMonitor,
+  _CdkPrivateStyleLoader,
   _VisuallyHiddenLoader,
+  coerceArray,
   CdkObserveContent,
   ObserversModule,
   InteractivityChecker,
   FocusTrapFactory,
   LiveAnnouncer,
   A11yModule,
-  coerceBooleanProperty,
+  _IdGenerator,
+  hasModifierKey,
   ActiveDescendantKeyManager,
   FocusKeyManager,
   addAriaReferencedId,
   removeAriaReferencedId,
   AriaDescriber,
+  _isTestEnvironment,
+  coerceCssPixelValue,
+  coerceBooleanProperty,
   VERSION2 as VERSION,
   AnimationCurves,
   AnimationDurations,
@@ -5449,4 +5449,4 @@ export {
   MatRippleLoader,
   _MatInternalFormField
 };
-//# sourceMappingURL=chunk-GI7GOXHT.js.map
+//# sourceMappingURL=chunk-EUXVEFN3.js.map

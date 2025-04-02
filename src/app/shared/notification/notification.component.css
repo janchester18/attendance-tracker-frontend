@@ -3,11 +3,17 @@
   overflow-x: hidden;
 }
 
+::ng-deep .mat-mdc-menu-content {
+  z-index: 9999;
+
+}
+
 .notification-container {
   max-height: 50vh; /* Allows scrolling inside the menu */
   overflow-y: auto;
   overflow-x: hidden;
   width: 250px; /* Adjust width as needed */
+  z-index: 9999;
 }
 
 .loading-indicator {
@@ -15,6 +21,17 @@
   justify-content: center;
   text-align: center;
   padding: 10px;
+}
+
+.refresh-indicator {
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 
 button {

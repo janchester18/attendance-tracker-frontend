@@ -44,6 +44,7 @@ export class UserManagementComponent {
           email: user.email,
           phone: user.phone,
           role: user.role,
+          mpl: user.mpl,
           overtimeHours: user.overtimeHours,
           accumulatedOvertime: user.accumulatedOvertime
         }));
