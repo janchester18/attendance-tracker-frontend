@@ -14,7 +14,6 @@
 ::ng-deep .mat-drawer {
   z-index: 999 !important;
   position: relative; /* ✅ Ensures child elements respect z-index */
-
 }
 
 ::ng-deep .mat-drawer-inner-container,
@@ -112,12 +111,12 @@
 @media (max-width: 768px) {
   .sidenav {
     width: 250px !important; /* ✅ Adjust width for mobile */
-    z-index: 999 !important;
+    z-index: 2 !important;
   }
 
   .sidenav-container {
     height: 100vh;
-    z-index: 999 !important;
+    z-index: 2 !important;
   }
 
   .content {
@@ -126,12 +125,11 @@
   }
 
   ::ng-deep .mat-drawer-inner-container,
-::ng-deep .mat-drawer {
-  z-index: 999 !important;
-  position: relative; /* ✅ Ensures child elements respect z-index */
-  border-top-right-radius: 0 !important;
-
-}
+  ::ng-deep .mat-drawer {
+    z-index: 999 !important;
+    position: relative; /* ✅ Ensures child elements respect z-index */
+    border-top-right-radius: 0 !important;
+  }
 }
 
 @media (max-width: 1377px) {

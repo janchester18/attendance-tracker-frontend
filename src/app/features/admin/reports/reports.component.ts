@@ -21,6 +21,7 @@ import { PrintSummaryComponent } from "../../../modals/admin/print-summary/print
 import { LoaderComponent } from "../../../shared/loader/loader.component";
 import { LoaderService } from '../../../loader.service';
 import { PrintEmpSummaryComponent } from "../../../modals/admin/print-emp-summary/print-emp-summary.component";
+import { FormsModule } from '@angular/forms';
 
 interface AttendanceSummary {
   userId: number;
@@ -71,7 +72,8 @@ interface OvertimeEntry {
     RejectLeaveComponent,
     PrintSummaryComponent,
     LoaderComponent,
-    PrintEmpSummaryComponent
+    PrintEmpSummaryComponent,
+    FormsModule
 ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.css'
@@ -82,6 +84,9 @@ export class ReportsComponent implements OnInit {
     isPrintSummaryModalOpen = false;
     isPrintEmpSummaryModalOpen = false;
     selectedSummary: AttendanceSummary | null = null;
+      // Variables to store dynamic dates
+    startDateInput!: string;
+    endDateInput!: string;
 
     displayedColumns: string[] = [
       'employeeName',
@@ -104,16 +109,39 @@ export class ReportsComponent implements OnInit {
     totalRecords = 0;
     pageSize = 10;
     currentPage = 1;
+    startDate!: string;
+    endDate!: string;
 
     formatDate(date: Date): string {
       return date.toISOString().split('T')[0]; // Extract only YYYY-MM-DD
     }
 
-    startDate = this.formatDate(new Date("2025-03-16T08:00:00Z"));
-    endDate = this.formatDate(new Date("2025-04-15T08:00:00Z"));
+    setDynamicDateRange(): void {
+      const today = new Date();
+      const currentYear = today.getFullYear();
+      const currentMonth = today.getMonth(); // 0-based (0=Jan)
+      const currentDay = today.getDate();
 
+      // Start Date Logic
+      const startMonth = currentDay >= 16 ? currentMonth : currentMonth - 1;
+      const startDate = new Date(currentYear, startMonth, 16);
 
-    constructor(private featureService: FeaturesService, private loaderService: LoaderService) {}
+      // End Date Logic
+      let endMonth = currentDay >= 16 ? currentMonth + 1 : currentMonth;
+      const endDate = new Date(currentYear, endMonth, 15);
+
+      // Add 1 day to endDate (to make it inclusive)
+      endDate.setDate(endDate.getDate() + 1); // 🚀 Key change here
+      startDate.setDate(startDate.getDate() + 1); // 🚀 Key change here
+      this.startDate = this.formatDate(startDate);
+      this.endDate = this.formatDate(endDate);
+
+      console.log(`Start Date: ${this.startDate}, End Date: ${this.endDate}`);
+    }
+
+    constructor(private featureService: FeaturesService, private loaderService: LoaderService) {
+      this.setDynamicDateRange();
+    }
 
     ngOnInit(): void {
       this.loadAttendanceSummary();
@@ -149,6 +177,20 @@ export class ReportsComponent implements OnInit {
         });
     }
 
+    // Method to update the date range dynamically
+  updateDateRange(): void {
+    if (this.startDateInput && this.endDateInput) {
+      const startDate = new Date(this.startDateInput);
+      const endDate = new Date(this.endDateInput);
+
+      this.startDate = this.formatDate(startDate);
+      this.endDate = this.formatDate(endDate);
+
+      this.loadAttendanceSummary();
+
+      console.log(`Start Date: ${this.startDate}, End Date: ${this.endDate}`);
+    }
+  }
 
 
     onPageChange(newPage: number): void {

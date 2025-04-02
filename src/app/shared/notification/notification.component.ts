@@ -60,9 +60,14 @@ export class NotificationComponent implements OnInit{
   }
 
   openNotificationModal(notificationId: string) {
-    this.dialog.open(NotificationModalComponent, {
+    const dialogRef = this.dialog.open(NotificationModalComponent, {
       width: '400px',
       data: { notificationId },
+    });
+
+    // Listen for modal close and refresh notifications
+    dialogRef.afterClosed().subscribe(() => {
+      this.refreshNotifications();
     });
   }
 

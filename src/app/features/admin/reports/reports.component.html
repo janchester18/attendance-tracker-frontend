@@ -5,7 +5,6 @@
   <div class="header-container">
     <h2>Reports</h2>
 
-
     <button mat-raised-button color="primary" class="add-overtime-button" (click)="openPrintAllSummaries()" matTooltip="Print Employee Summary">
       + Print Summary
     </button>
@@ -99,6 +98,12 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </mat-table>
+
+    <!-- Example Date Pickers -->
+    <input type="date" [(ngModel)]="startDateInput">
+    <input type="date" [(ngModel)]="endDateInput">
+    <button (click)="updateDateRange()">Update Date Range</button>
+
 
 
   <app-custom-paginator
