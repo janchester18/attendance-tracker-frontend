@@ -1,0 +1,79 @@
+/* Dialog Content */
+.dialog-content {
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
+  color: #333;
+}
+
+/* Title */
+.dialog-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+/* Message */
+.dialog-message {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+/* Meta Info Container */
+.dialog-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Meta Info Items */
+.dialog-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Icons */
+.type-icon, .date-icon, .status-icon {
+  display: flex;
+  align-items: center; /* Aligns items vertically */
+  font-size: 16px;
+  color: #666;
+}
+
+/* Link Button */
+.dialog-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: #1976D2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.dialog-link:hover {
+  text-decoration: underline;
+}
+
+/* Close Button */
+.dialog-actions {
+  padding: 10px 20px;
+}
+
+.dialog-close-button {
+  font-size: 14px;
+  color: #1976D2;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dialog-close-button:hover {
+  text-decoration: underline;
+}

@@ -2,6 +2,60 @@
   border: solid red 1px;
 } */
 
+/* Container to group date pickers and the button */
+.date-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Styling for date inputs */
+.date-picker-container input[type="date"] {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  color: #374151;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.date-picker-container input[type="date"]:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+/* Styling for the button */
+.date-picker-container button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.date-picker-container button:hover {
+  background-color: #0056b3;
+}
+
+button.mat-mdc-icon-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+}
+
+.date-icon {
+  vertical-align: middle;
+}
+
+
 .attendance-container {
   max-width: 100%;
   padding: 20px;
@@ -60,6 +114,12 @@
   max-width: 1000px;
 }
 
+.empty-message {
+  text-align: center;
+  font-size: 16px;
+  color: gray;
+  margin: 20px 0;
+}
 
 ::ng-deep .mat-mdc-header-cell {
   width: 100% !important;

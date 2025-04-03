@@ -130,11 +130,17 @@ export class ReportsComponent implements OnInit {
       let endMonth = currentDay >= 16 ? currentMonth + 1 : currentMonth;
       const endDate = new Date(currentYear, endMonth, 15);
 
-      // Add 1 day to endDate (to make it inclusive)
-      endDate.setDate(endDate.getDate() + 1); // 🚀 Key change here
-      startDate.setDate(startDate.getDate() + 1); // 🚀 Key change here
+      // Adjust dates to be inclusive
+      startDate.setDate(startDate.getDate() + 1);
+      endDate.setDate(endDate.getDate() + 1);
+
+      // Format and assign dynamic dates
       this.startDate = this.formatDate(startDate);
       this.endDate = this.formatDate(endDate);
+
+      // Pre-fill the date inputs
+      this.startDateInput = this.startDate;
+      this.endDateInput = this.endDate;
 
       console.log(`Start Date: ${this.startDate}, End Date: ${this.endDate}`);
     }

@@ -1,17 +1,36 @@
-<mat-dialog-content *ngIf="!loading; else loadingState">
-  <h2>{{ notificationDetails.title }}</h2>
-  <p>{{ notificationDetails.message }}</p>
+<mat-dialog-content *ngIf="!loading; else loadingState" class="dialog-content">
+  <div class="content-wrapper">
+    <h2 class="dialog-title">{{ notificationDetails.title }}</h2>
+    <p class="dialog-message">{{ notificationDetails.message }}</p>
 
-  <small>{{ notificationDetails.createdAt | date: 'MM-dd-yyyy hh:mm a' }}</small>
+    <div class="dialog-meta">
+      <span class="dialog-type">
+        <mat-icon class="type-icon">info</mat-icon>
+        {{ notificationDetails.type }}
+      </span>
+
+      <span class="dialog-date">
+        <mat-icon class="date-icon">event</mat-icon>
+        {{ notificationDetails.createdAt | date: 'MMM dd, yyyy hh:mm a' }}
+      </span>
+
+      <span class="dialog-status" *ngIf="notificationDetails.readAt">
+        <mat-icon class="status-icon">visibility</mat-icon>
+        Read on {{ notificationDetails.readAt | date: 'MMM dd, yyyy hh:mm a' }}
+      </span>
+    </div>
+  </div>
 </mat-dialog-content>
 
 <ng-template #loadingState>
   <div class="loading-container">
-    <mat-spinner diameter="30"></mat-spinner>
-    <p>Loading...</p>
+    <mat-spinner diameter="30" class="text-primary"></mat-spinner>
+    <p class="loading-text">Loading notification...</p>
   </div>
 </ng-template>
 
-<mat-dialog-actions align="end">
-  <button mat-button (click)="closeModal()">Close</button>
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-button class="dialog-close-button" (click)="closeModal()">
+    Close
+  </button>
 </mat-dialog-actions>
