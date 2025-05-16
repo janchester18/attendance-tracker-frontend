@@ -1,6 +1,7 @@
 {
   "outputDirectory": "dist/attendance-tracker-frontend/browser",
   "routes": [
+    { "src": "/(.*)\\.(js|css|ico|png|jpg|jpeg|gif|svg|woff|woff2)$", "dest": "/$1.$2" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
