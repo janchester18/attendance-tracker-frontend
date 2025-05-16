@@ -1,10 +1,6 @@
 {
-  "builds": [
-    { "src": "package.json", "use": "@vercel/node" },
-    { "src": "dist/attendance-tracker-frontend/browser/**", "use": "@vercel/static" }
-  ],
+  "outputDirectory": "dist/attendance-tracker-frontend/browser",
   "routes": [
     { "src": "/(.*)", "dest": "/index.html" }
-  ],
-  "outputDirectory": "dist/attendance-tracker-frontend/browser"
+  ]
 }
