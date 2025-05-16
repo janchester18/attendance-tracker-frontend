@@ -27,7 +27,7 @@
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
-/* Styling for the button */
+/* Styling for regular buttons */
 .date-picker-container button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
@@ -40,21 +40,52 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-.date-picker-container button:hover {
-  background-color: #0056b3;
-}
-
+/* Icon button specific styles */
 button.mat-mdc-icon-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 0 !important;
+  width: 40px;
+  height: 40px;
+  line-height: 1 !important; /* Fix vertical alignment */
 }
 
 .date-icon {
-  vertical-align: middle;
+  font-size: 24px !important;
+  width: 24px !important;
+  height: 24px !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Rest of your existing styles below... */
+.attendance-container {
+  max-width: 100%;
+  padding: 20px;
+}
+
+::ng-deep .add-overtime-button {
+  background-color: #2196f3 !important;
+  color: white !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.header-container h2 {
+  margin-top: 0px !important;
+}
 
 .attendance-container {
   max-width: 100%;

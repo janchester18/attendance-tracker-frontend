@@ -77,7 +77,7 @@ export class AttendanceHistoryComponent implements OnInit{
       next: (response: any) => {
         console.log('📦 API Response:', response);
 
-        this.attendanceRecords.data = response.data?.attendance?.map((record: any) => ({
+        this.attendanceRecords.data = response.data?.attendances?.map((record: any) => ({
           ...record,
           date: new Date(record.date).toLocaleDateString('en-CA'), // Convert to YYYY-MM-DD format
           userName: record.user?.name || 'N/A'

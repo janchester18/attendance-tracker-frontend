@@ -18,7 +18,7 @@ interface JwtPayload {
 })
 export class FeaturesService {
   // private baseUrl = 'https://10.0.0.13:7009';
-  private baseUrl = 'http://10.0.0.9:5249';
+  private baseUrl = 'http://10.0.0.7:5249';
 
   constructor(private http: HttpClient, private router: Router) {}
 
