@@ -1,0 +1,61 @@
+<app-loader/>
+
+<div class="container">
+  <div class="header-container">
+    <h2>Employee Management</h2>
+
+    <!-- Add Overtime Request Button -->
+    <button mat-raised-button color="primary" class="add-overtime-button" (click)="AddEmployeeModal()">
+      + Add New User
+    </button>
+  </div>
+  <app-custom-paginator
+  [totalRecords]="totalRecords"
+  [pageSize]="pageSize"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)"
+  (pageSizeChange)="onPageSizeChange($event)">
+  </app-custom-paginator>
+
+  <div class="user-grid">
+    <div *ngFor="let user of users" class="card">
+      <div class="card-header">
+        <div class="avatar">{{ user.name.charAt(0) }}</div>
+        <div class="user-info">
+          <h3>{{ user.name }}</h3>
+          <p class="role">{{ user.role }}</p>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Phone:</strong> {{ user.phone }}</p>
+        <p><strong>Overtime Hours:</strong> {{ user.overtimeHours }}</p>
+        <p><strong>MPL/s:</strong> {{ user.mpl }}</p>
+      </div>
+
+      <div class="card-footer">
+        <button class="mpl-btn" (click)="ConvertMplModal(user)" [disabled]="user.overtimeHours < 8"><mat-icon>autorenew</mat-icon>
+          Convert to MPL
+        </button>
+        <button class="btn" ><mat-icon>edit</mat-icon>
+          Edit Profile
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-add-employee *ngIf="isAddEmployeeModalOpen"
+  (close)="closeAddEmployeeModal()"
+  (submitRequest)="handleSubmission($event)"
+  (refreshTable)="loadUsers()">
+</app-add-employee>
+
+<app-convert-mpl *ngIf="isConvertMplModalOpen"
+  (close)="closeConvertMplModal()"
+  (submitRequest)="handleSubmission($event)"
+  [userData] = "selectedUser"
+  (refreshTable)="loadUsers()">
+</app-convert-mpl>
+

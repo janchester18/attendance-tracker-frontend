@@ -1,0 +1,111 @@
+<!-- Existing Summary Table -->
+<div class="custom-modal">
+  <div class="modal-content" id="printSummary" #printSection>
+
+    <div class="top-part">
+      <h2>Attendance Summary of {{ record?.employeeName }}</h2>
+        <!-- Modal Actions -->
+        <div class="modal-actions">
+          <button class="btn close" (click)="closeModal()">Cancel</button>
+          <button class="btn submit" (click)="printModalContent()">Print</button>
+        </div>
+    </div>
+
+
+    <h3>For the date of {{ record?.startDate | date:'MMMM dd, yyyy' }} - {{ record?.endDate | date:'MMMM dd, yyyy' }}</h3>
+    <!-- Summary Table -->
+    <table>
+      <thead>
+        <tr>
+          <th colspan="2">Lates/Early Out</th>
+          <th colspan="2">Approved Overtime</th>
+          <th colspan="2">Used Offset</th>
+          <th colspan="2">Converted to MPL</th>
+          <th colspan="2">OT</th>
+          <th colspan="2">Total Lates</th>
+          <th>Absences</th>
+        </tr>
+        <tr>
+          <th>AM</th>
+          <th>PM</th>
+          <th>No.</th>
+          <th>Hrs.</th>
+          <th>No.</th>
+          <th>Hrs.</th>
+          <th>No.</th>
+          <th>Hrs.</th>
+          <th>Regular</th>
+          <th>Night Diff</th>
+          <th>No.</th>
+          <th>Hrs.</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ record?.rawLateCount }}</td>
+          <td>{{ record?.earlyDepartures }}</td>
+          <td>{{ record?.overtimeEntries?.length}}</td>
+          <td>{{ record?.otHours }}</td>
+          <td>{{ getOffsetCount(record?.lateArrivals) }}</td>
+          <td>{{ getOffsetHours(record?.lateArrivals) }}</td>
+          <td>{{ record?.mpLsConverted }}</td>
+          <td>{{ record?.mpLsConvertedHours }}</td>
+          <td>{{ record?.finalOTHours }}</td>
+          <td>{{ record?.nightDiffHours }}</td>
+          <td>{{ record?.finalLates }}</td>
+          <td>{{ record?.finalLateTime }}</td>
+          <td>{{ record?.daysAbsent }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Dynamic Details Table -->
+    <table>
+      <thead>
+        <tr>
+          <th colspan="3">TARDINESS/OFFSET</th>
+          <th colspan="3">APPROVED OVERTIME</th>
+        </tr>
+        <tr>
+          <th>Date</th>
+          <th>(hh:mm)</th>
+          <th>Offset</th>
+          <th>Date</th>
+          <th>(hh:mm)</th>
+          <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of getRows()">
+          <!-- Tardiness/Offset Section -->
+          <td>
+            {{ getLateArrival(i)?.clockIn | date:'MM/dd/yyyy' }}
+          </td>
+          <td>
+            {{ getLateArrival(i)?.lateDuration || '' }}
+          </td>
+          <td>
+            {{ getLateArrival(i) ? (getLateArrival(i).isOffseted ? 'Yes' : 'No') : '' }}
+          </td>
+
+          <!-- Approved Overtime Section -->
+          <td>
+            {{ getOvertime(i)?.date | date:'MM/dd/yyyy' }}
+          </td>
+          <td>
+            {{ getOvertime(i)?.overtimeDuration || '' }}
+          </td>
+          <td>
+            {{ getOvertime(i)?.reason || '' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+</div>
+
+<!-- Overlay Background -->
+<div class="modal-overlay" (click)="closeModal()"></div>

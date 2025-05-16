@@ -1,0 +1,125 @@
+<app-loader/>
+
+<div class="attendance-container">
+
+  <div class="header-container">
+    <h2>Leave Requests</h2>
+
+    <!-- Add Overtime Request Button -->
+    <button mat-raised-button color="primary" class="add-overtime-button" (click)="AddLeaveModal()">
+      + Add Leave Request
+    </button>
+  </div>
+
+  <div *ngIf="totalRecords === 0" class="empty-message">
+    <p>No Leave requests found.</p>
+  </div>
+
+  <div class="hide" *ngIf="totalRecords > 0">
+    <mat-table [dataSource]="leaveRecords" class="mat-table" matSort>
+
+      <!-- Start Date Column -->
+      <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+        <td mat-cell *matCellDef="let record"> {{ record.startDate | date:'MMMM dd, yyyy' }} </td>
+      </ng-container>
+
+      <!-- End Date Column -->
+      <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
+        <td mat-cell *matCellDef="let record"> {{ record.endDate | date:'MMMM dd, yyyy' }} </td>
+      </ng-container>
+
+      <!-- Days Count Column -->
+      <ng-container matColumnDef="daysCount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Days </th>
+        <td mat-cell *matCellDef="let record"> {{ record.daysCount }} </td>
+      </ng-container>
+
+      <!-- Leave Type Column -->
+      <ng-container matColumnDef="typeName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Leave Type </th>
+        <td mat-cell *matCellDef="let record"> {{ record.typeName }} </td>
+      </ng-container>
+
+      <!-- Leave Type Column -->
+      <ng-container matColumnDef="reason">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Reason </th>
+        <td mat-cell *matCellDef="let record">
+          {{ record.reason.length > 30 ? (record.reason | slice:0:30) + '...' : record.reason }}
+        </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="statusName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+        <td mat-cell *matCellDef="let record">
+          <span [ngClass]="{
+            'status-approved': record.statusName === 'Approved',
+            'status-pending': record.statusName === 'Pending',
+            'status-rejected': record.statusName === 'Rejected',
+            'status-default': !['Approved', 'Pending', 'Rejected'].includes(record.statusName)
+          }">
+            {{ record.statusName }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions" class="actions-column">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+        <td mat-cell *matCellDef="let record">
+          <!-- View Details Button -->
+          <button mat-icon-button color="primary" class="details-btn"
+                  (click)="viewDetails(record)" matTooltip="View Details">
+            <mat-icon>info</mat-icon>
+          </button>
+
+          <!-- Edit Button (Only shown if status is Pending) -->
+          <button mat-icon-button color="warn" class="edit-btn"
+                  *ngIf="record.statusName === 'Pending'" (click)="editRecord(record)"
+                  matTooltip="Edit">
+            <mat-icon>edit_note</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </mat-table>
+
+
+    <app-custom-paginator
+      [totalRecords]="totalRecords"
+      [pageSize]="pageSize"
+      [currentPage]="currentPage"
+      (pageChange)="onPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)">
+    </app-custom-paginator>
+  </div>
+
+
+</div>
+<!-- Display Modal Component -->
+<app-add-leave-request *ngIf="isAddLeaveModalOpen"
+  (close)="closeModal()"
+  (submitRequest)="handleSubmission($event)"
+  (refreshTable)="loadLeaveRequests()">
+</app-add-leave-request>
+
+<!-- Overtime Request Details Modal -->
+<app-view-leave-request
+  *ngIf="isViewLeaveModalOpen"
+  [leaveData]="selectedLeave"
+  (close)="closeDetailsModal()">
+</app-view-leave-request>
+
+<!-- Display Modal Component -->
+<app-edit-leave-request *ngIf="isEditLeaveModalOpen"
+[leaveData]="selectedLeave"
+(close)="closeEditModal()"
+(submitRequest)="handleSubmission($event)"
+(refreshTable)="loadLeaveRequests()">
+
+</app-edit-leave-request>

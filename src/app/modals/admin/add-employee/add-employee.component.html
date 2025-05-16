@@ -1,0 +1,53 @@
+<!-- Modal Container -->
+<div class="custom-modal">
+  <div class="modal-content">
+    <h2>Add User</h2>
+    <form [formGroup]="userForm">
+      <div class="form-group" [ngClass]="{'error': isInvalid('name')}">
+        <label>Name</label>
+        <input type="text" formControlName="name">
+        <small *ngIf="isInvalid('name')">Name is required</small>
+      </div>
+
+      <div class="form-group" [ngClass]="{'error': isInvalid('email')}">
+        <label>Email</label>
+        <input type="email" formControlName="email">
+        <small *ngIf="isInvalid('email')">Valid email is required</small>
+      </div>
+
+      <div class="form-group" [ngClass]="{'error': isInvalid('phone')}">
+        <label>Phone</label>
+        <input type="text" formControlName="phone">
+        <small *ngIf="isInvalid('phone')">Phone number is required</small>
+      </div>
+
+      <div class="form-group" [ngClass]="{'error': isInvalid('password')}">
+        <label>Password</label>
+        <input type="password" formControlName="password">
+        <small *ngIf="isInvalid('password')">Password is required</small>
+      </div>
+
+      <div class="form-group" [ngClass]="{'error': isInvalid('role')}">
+        <label>Role</label>
+        <select formControlName="role">
+          <option value="" disabled>Select Role</option>
+          <option value="Admin">Admin</option>
+          <option value="Employee">Employee</option>
+        </select>
+        <small *ngIf="isInvalid('role')">Role is required</small>
+      </div>
+    </form>
+
+    <p *ngIf="validationMessage" class="error-message">
+      {{ validationMessage }}
+    </p>
+
+    <div class="modal-actions">
+      <button class="btn close" (click)="closeModal()">Close</button>
+      <button class="btn submit" (click)="submit()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay Background -->
+<div class="modal-overlay" (click)="closeModal()"></div>

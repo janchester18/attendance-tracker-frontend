@@ -1,0 +1,158 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.navbar {
+  background-color: #333333;
+  color: white;
+  z-index: 999 !important;
+}
+
+::ng-deep .mat-sidenav-container,
+::ng-deep .mat-drawer {
+  z-index: 999 !important;
+  position: relative; /* ✅ Ensures child elements respect z-index */
+}
+
+::ng-deep .mat-drawer-inner-container,
+::ng-deep .mat-drawer {
+  z-index: 999 !important;
+  position: relative; /* ✅ Ensures child elements respect z-index */
+  border-top-right-radius: 0 !important;
+
+}
+
+.sidenav-container,
+::ng-deep .mat-drawer {
+  height: 100vh;
+  border: solid black 1px;
+  z-index: 999 !important;
+  position: relative; /* ✅ Ensures child elements respect z-index */
+}
+
+.sidenav {
+  width: 16% !important;
+  z-index: 1 !important;
+  /* Remove position: absolute */
+  overflow-y: auto;  /* Enable vertical scrolling */
+  height: 100%; /* Use full height of the sidenav container */
+}
+
+.sidenav-list ::ng-deep .mat-icon {
+  margin-right: 10px;
+  overflow-y: auto;  /* Enable vertical scrolling */
+
+}
+
+::ng-deep .mat-expansion-panel {
+  box-shadow: none !important;
+}
+
+::ng-deep .mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+::ng-deep .mat-mdc-list-item {
+  font-weight: bolder;
+}
+
+::ng-deep .mat-mdc-list-item-unscoped-content {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.content {
+  padding: 16px;
+}
+
+::ng-deep .mat-sidenav-container {
+  height: 100vh;
+  border: solid black 1px;
+}
+
+::ng-deep .mat-sidenav-content {
+  border: solid black 1px;
+}
+
+.main-footer {
+  margin-top: auto;
+  background-color: #333333;
+  color: white;
+  text-align: center;
+  font-size: .9em;
+}
+
+.image-wrapper {
+  margin-top: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar-logo {
+  width: 120px; /* Adjust as needed */
+  height: auto;
+  border-radius: 8px; /* Optional rounded corners */
+  align-self: center;
+  align-items: center;
+  mix-blend-mode: multiply;
+}
+
+.spacer {
+  flex: 1;
+}
+
+
+@media (max-width: 768px) {
+  .sidenav {
+    width: 250px !important; /* ✅ Adjust width for mobile */
+    z-index: 2 !important;
+  }
+
+  .sidenav-container {
+    height: 100vh;
+    z-index: 2 !important;
+  }
+
+  .content {
+    padding: 10px;
+    z-index: 1 !important;
+  }
+
+  ::ng-deep .mat-drawer-inner-container,
+  ::ng-deep .mat-drawer {
+    z-index: 999 !important;
+    position: relative; /* ✅ Ensures child elements respect z-index */
+    border-top-right-radius: 0 !important;
+  }
+}
+
+@media (max-width: 1377px) {
+  .sidenav {
+    width: 250px !important; /* ✅ Adjust width for mobile */
+    z-index: 999 !important;
+  }
+
+  .sidenav-container {
+    height: 100vh;
+    z-index: 999 !important;
+  }
+
+  .content {
+    padding: 10px;
+    z-index: 1 !important;
+  }
+
+  ::ng-deep .mat-drawer-inner-container,
+::ng-deep .mat-drawer {
+  z-index: 999 !important;
+  position: relative; /* ✅ Ensures child elements respect z-index */
+  border-top-right-radius: 0 !important;
+
+}
+}

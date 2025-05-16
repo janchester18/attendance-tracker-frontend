@@ -1,0 +1,44 @@
+<mat-menu #notificationMenu="matMenu" class="notification-menu">
+  <div class="notification-container"
+       (touchstart)="onTouchStart($event)"
+       (touchmove)="onTouchMove($event)"
+       (touchend)="onTouchEnd()"
+       (scroll)="onScroll($event)">
+
+    <!-- Pull-to-Refresh Indicator (Shown when refreshing) -->
+    <div class="refresh-indicator" *ngIf="isRefreshing">
+      <mat-spinner diameter="20"></mat-spinner>
+      <span>Refreshing...</span>
+    </div>
+
+    <ng-container *ngIf="notifications.length > 0; else noNotifications">
+      <button mat-menu-item
+              *ngFor="let notification of notifications"
+              (click)="openNotificationModal(notification.id)"
+              class="notification-item">
+        <mat-icon class="notification-icon">
+          {{ notification.isRead ? 'drafts' : 'email' }}
+        </mat-icon>
+        <div class="notification-content">
+          <div class="notification-title">{{ notification.title }}</div>
+          <div class="notification-date">{{ notification.createdAt | date: 'MM-dd-yyyy' }}</div>
+        </div>
+      </button>
+
+      <!-- Loading More Indicator -->
+      <div *ngIf="loadingMore" class="loading-indicator">
+        <mat-spinner diameter="20"></mat-spinner>
+      </div>
+    </ng-container>
+
+  </div>
+
+  <ng-template #noNotifications>
+    <button mat-menu-item disabled>No new notifications</button>
+  </ng-template>
+</mat-menu>
+
+<!-- Notification Button -->
+<button mat-icon-button [matMenuTriggerFor]="notificationMenu" matBadge="{{ unreadCount }}" matBadgeColor="warn">
+  <mat-icon style="color: white;">notifications</mat-icon>
+</button>

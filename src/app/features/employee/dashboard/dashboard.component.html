@@ -1,0 +1,16 @@
+<app-loader/>
+
+<div class="container">
+  <div class="clock-container">
+    <div class="date">{{ currentDate }}</div>
+    <div class="time">{{ currentTime }}</div>
+  </div>
+
+  <div class="buttons">
+    <button mat-raised-button class="clock-in-btn" color="primary" (click)="clockIn()">Clock In</button>
+    <button mat-raised-button class="start-break-btn" color="accent" (click)="startBreak()">Start Break</button>
+    <button mat-raised-button class="end-break-btn" color="warn" (click)="endBreak()">End Break</button>
+    <button mat-raised-button class="clock-out-btn" color="primary" (click)="clockOut()">Clock Out</button>
+  </div>
+</div>
+<app-snackbar #snackbar></app-snackbar>

@@ -1,0 +1,76 @@
+<div class="view-modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+  <div class="modal-content">
+    <h2 id="modalTitle">Overtime Request Details</h2>
+
+    <div class="details-container">
+      <div class="details-group">
+        <label>ID:</label>
+        <p>{{ overtimeData.id }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Employee Name:</label>
+        <p>{{ overtimeData.employeeName }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Date:</label>
+        <p>{{ overtimeData.date | date: 'MMMM dd, yyyy' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Start Time:</label>
+        <p>{{ overtimeData.startTime }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>End Time:</label>
+        <p>{{ overtimeData.endTime }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Reason:</label>
+        <p>{{ overtimeData.reason }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Expected Output:</label>
+        <p>{{ overtimeData.expectedOutput }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Status:</label>
+        <p [ngClass]="{'approved': overtimeData.status === 'Approved', 'pending': overtimeData.status === 'Pending'}">
+          {{ overtimeData.status }}
+        </p>
+      </div>
+
+      <div class="details-group">
+        <label>Reviewed By:</label>
+        <p>{{ overtimeData.reviewedBy ? overtimeData.approverName : 'Not yet reviewed' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Rejection Reason:</label>
+        <p>{{ overtimeData.rejectionReason ? overtimeData.rejectionReason : 'N/A' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Created At:</label>
+        <p>{{ overtimeData.createdAt | date: 'MMMM dd, yyyy hh:mm a' }}</p>
+      </div>
+
+      <div class="details-group">
+        <label>Updated At:</label>
+        <p>{{ overtimeData.updatedAt | date: 'MMMM dd, yyyy hh:mm a' }}</p>
+      </div>
+
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn close" (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" (click)="closeModal()"></div>

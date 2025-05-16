@@ -1,0 +1,20 @@
+<div class="custom-paginator">
+  <button mat-raised-button color="primary" (click)="previousPage()" [disabled]="currentPage === 1">
+    ❮ Prev
+  </button>
+
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+
+  <button mat-raised-button color="primary" (click)="nextPage()" [disabled]="currentPage === totalPages">
+    Next ❯
+  </button>
+
+
+  <select (change)="updatePageSize($event)">
+    <option [value]="2" [selected]="pageSize == 2">2</option>
+    <option [value]="5" [selected]="pageSize == 5">5</option>
+    <option [value]="10" [selected]="pageSize == 10">10</option>
+    <option [value]="20" [selected]="pageSize == 20">20</option>
+    <option [value]="30" [selected]="pageSize == 30">30</option>
+  </select>
+</div>

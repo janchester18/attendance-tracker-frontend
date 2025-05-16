@@ -1,0 +1,48 @@
+.custom-snackbar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 250px;
+  padding: 16px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  animation: slide-in 0.3s ease-out forwards, fade-out 0.3s ease-in forwards 5s; /* 🛠 Delay fade-out */
+  z-index: 1004;
+}
+
+/* Slide-in animation */
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Fade-out animation (delayed by 60s) */
+@keyframes fade-out {
+  from {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Snackbar colors */
+.success {
+  background-color: #4caf50; /* Green */
+}
+
+.error {
+  background-color: #f44336; /* Red */
+}

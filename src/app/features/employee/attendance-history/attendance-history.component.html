@@ -1,0 +1,85 @@
+<app-loader/>
+
+<div class="attendance-container">
+  <h2>Attendance History</h2>
+
+  <div *ngIf="totalRecords === 0" class="empty-message">
+    <p>No Leave requests found.</p>
+  </div>
+
+<div class="hide" *ngIf="totalRecords > 0">
+  <mat-table [dataSource]="attendanceRecords" class="mat-table" matSort>
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+      <td mat-cell *matCellDef="let record"> {{ record.date | date:'MMMM dd, yyyy' }} </td>
+    </ng-container>
+
+    <!-- Clock In Column -->
+    <ng-container matColumnDef="clockIn">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Clock In </th>
+      <td mat-cell *matCellDef="let record"> {{ record.clockIn | date:'shortTime' }} </td>
+    </ng-container>
+
+    <!-- Clock Out Column -->
+    <ng-container matColumnDef="clockOut">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Clock Out </th>
+      <td mat-cell *matCellDef="let record">
+        {{ record.clockOut ? (record.clockOut | date:'shortTime') : '-' }}
+      </td>
+    </ng-container>
+
+    <!-- Work Duration Column -->
+    <ng-container matColumnDef="workDuration">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Work Duration </th>
+      <td mat-cell *matCellDef="let record"> {{ record.formattedWorkDuration }} </td>
+    </ng-container>
+
+    <!-- Break Duration Column -->
+    <ng-container matColumnDef="breakDuration">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Break Duration </th>
+      <td mat-cell *matCellDef="let record"> {{ record.formattedBreakDuration }} </td>
+    </ng-container>
+
+    <!-- Late Duration Column -->
+    <ng-container matColumnDef="lateDuration">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Late Duration </th>
+      <td mat-cell *matCellDef="let record"> {{ record.formattedLateDuration }} </td>
+    </ng-container>
+
+    <!-- Night Differential Column -->
+    <ng-container matColumnDef="nightDifferential">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Night Differential </th>
+      <td mat-cell *matCellDef="let record"> {{ record.formattedNightDifDuration }} </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let record">
+        <span [ngClass]="{
+          'status-present': record.status === 'Present',
+          'status-absent': record.status === 'Absent',
+          'status-late': record.status === 'Late',
+          'status-leave': record.status === 'Leave'
+        }">
+          {{ record.status }}
+        </span>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </mat-table>
+  <app-custom-paginator
+  [totalRecords]="totalRecords"
+  [pageSize]="pageSize"
+  [currentPage]="currentPage"
+  (pageChange)="onPageChange($event)"
+  (pageSizeChange)="onPageSizeChange($event)">
+</app-custom-paginator>
+</div>
+
+
+</div>

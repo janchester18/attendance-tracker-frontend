@@ -1,4 +1,63 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
-<app-sidebar></app-sidebar>
-<app-footer></app-footer>
+<mat-toolbar class="navbar">
+  <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon style="color: white;">menu</mat-icon>
+  </button>
+  <span><strong>Attendance Tracker</strong></span>
+
+  <!-- Spacer to push the notification button to the right -->
+  <span class="spacer"></span>
+
+
+    <!-- Notification Button -->
+    <app-notification/>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #sidenav
+    [mode]="isMobile ? 'over' : 'side'"
+    [opened]="!isMobile"
+    class="sidenav">
+
+    <!-- Sidebar Logo -->
+    <div class="image-wrapper">
+      <div class="sidebar-logo">
+        <img src="assets/RecreatedFIGMAlogo.PNG" alt="Logo" class="sidebar-logo">
+      </div>
+    </div>
+
+    <mat-nav-list class="sidenav-list">
+      <a mat-list-item routerLink="/main/dashboard"><mat-icon>home</mat-icon> <strong>Dashboard</strong></a>
+      <a mat-list-item routerLink="/main/attendance-history"><mat-icon>history</mat-icon> <strong>Attendance History</strong></a>
+
+      <!-- Expandable Assets -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-icon>assignment</mat-icon> <strong>Requests</strong>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="overtime">
+            <mat-icon>schedule</mat-icon> <strong>Overtime</strong>
+          </a>
+        </mat-nav-list>
+        <mat-nav-list>
+          <a mat-list-item routerLink="leave">
+            <mat-icon>beach_access</mat-icon> <strong>Leave</strong>
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <a mat-list-item (click)="onLogout()"><mat-icon>logout</mat-icon> <strong>Logout</strong></a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <router-outlet/>
+    <app-snackbar #snackbar></app-snackbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- Footer in Main Content -->
+<footer class="main-footer">
+  <p>Copyright &copy;2021 SITESPHIL. All Rights Reserved</p>
+</footer>

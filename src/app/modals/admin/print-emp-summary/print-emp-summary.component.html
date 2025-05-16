@@ -1,0 +1,107 @@
+<div class="custom-modal">
+  <div class="modal-content" id="printSummary" #printSection>
+
+    <div class="top-part">
+      <!-- Modal Actions (hidden in print via CSS) -->
+      <h3>All Attendance Summaries</h3>
+      <!-- Modal Actions (hidden in print via CSS) -->
+      <div class="modal-actions">
+        <button class="btn close" (click)="closeModal()">Close</button>
+        <button class="btn submit" (click)="printModalContent()">Print</button>
+      </div>
+    </div>
+
+    <div *ngFor="let record of allSummaries" class="summary">
+
+
+      <h3>Attendance Summary of {{ record.employeeName }}</h3>
+      <!-- Optionally, if your record has startDate and endDate -->
+      <h4>For the date of {{ record.startDate | date:'MMMM dd, yyyy' }} - {{ record.endDate | date:'MMMM dd, yyyy' }}
+      </h4>
+
+      <!-- Summary Table -->
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Lates/Early Out</th>
+            <th colspan="2">Approved Overtime</th>
+            <th colspan="2">Used Offset</th>
+            <th colspan="2">Converted to MPL</th>
+            <th colspan="2">OT</th>
+            <th colspan="2">Total Lates</th>
+            <th>Absences</th>
+          </tr>
+          <tr>
+            <th>AM</th>
+            <th>PM</th>
+            <th>No.</th>
+            <th>Hrs.</th>
+            <th>No.</th>
+            <th>Hrs.</th>
+            <th>No.</th>
+            <th>Hrs.</th>
+            <th>Regular</th>
+            <th>Night Diff</th>
+            <th>No.</th>
+            <th>Hrs.</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ record.rawLateCount }}</td>
+            <td>{{ record.earlyDepartures }}</td>
+            <td>{{ record.overtimeEntries.length || 0 }}</td>
+            <td>{{ record.otHours }}</td>
+            <td>{{ getOffsetCount(record.lateArrivals) }}</td>
+            <td>{{ getOffsetHours(record.lateArrivals) }}</td>
+            <td>{{ record.mpLsConverted }}</td>
+            <td>{{ record.mpLsConvertedHours }}</td>
+            <td>{{ record.finalOTHours }}</td>
+            <td>{{ record.nightDiffHours }}</td>
+            <td>{{ record.finalLates }}</td>
+            <td>{{ record.finalLateTime }}</td>
+            <td>{{ record.daysAbsent }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Dynamic Details Table for Tardiness/Offset and Approved Overtime -->
+      <table>
+        <thead>
+          <tr>
+            <th colspan="3">TARDINESS/OFFSET</th>
+            <th colspan="3">APPROVED OVERTIME</th>
+          </tr>
+          <tr>
+            <th>Date</th>
+            <th>(hh:mm)</th>
+            <th>Offset</th>
+            <th>Date</th>
+            <th>(hh:mm)</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of getRows(record)">
+            <!-- Tardiness/Offset Section -->
+            <td>{{ getLateArrival(record, i)?.clockIn | date:'MM/dd/yyyy' }}</td>
+            <td>{{ getLateArrival(record, i)?.lateDuration || '' }}</td>
+            <td>{{ getLateArrival(record, i) ? (getLateArrival(record, i).isOffseted ? 'Yes' : 'No') : '' }}</td>
+            <!-- Approved Overtime Section -->
+            <td>{{ getOvertime(record, i)?.date | date:'MM/dd/yyyy' }}</td>
+            <td>{{ getOvertime(record, i)?.overtimeDuration || '' }}</td>
+            <td>{{ getOvertime(record, i)?.reason || '' }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <mat-divider/>
+    </div>
+
+
+
+
+  </div>
+</div>
+
+<div class="modal-overlay" (click)="closeModal()"></div>

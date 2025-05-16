@@ -1,0 +1,35 @@
+<!-- Modal Container -->
+<div class="custom-modal">
+  <div class="modal-content">
+    <h2>Convert Overtime to MPL</h2>
+
+    <!-- Request Details -->
+    <div class="request-details">
+      <div class="details-group">
+        <label>Convertible Overtime Hours:</label>
+        <p>{{ userData.overtimeHours }}</p>
+      </div>
+  </div>
+
+    <form [formGroup]="userForm">
+      <!-- Clock In -->
+      <div class="form-group" [ngClass]="{'error': isInvalid('mplConverted')}">
+        <label>Number of MPL/s</label>
+        <input type="number" formControlName="mplConverted">
+        <small *ngIf="isInvalid('mplConverted')">Invalid input</small>
+      </div>
+    </form>
+
+    <p *ngIf="validationMessage" class="error-message">
+      {{ validationMessage }}
+    </p>
+
+    <div class="modal-actions">
+      <button class="btn close" (click)="closeModal()">Close</button>
+      <button class="btn submit" (click)="submit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay Background -->
+<div class="modal-overlay" (click)="closeModal()"></div>
