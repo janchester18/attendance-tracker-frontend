@@ -13,8 +13,8 @@ export const loaderInterceptor: HttpInterceptorFn = (
 
   // List of URLs that should not trigger the loader
   const excludedUrls = [
-    'http://10.0.0.7:5249/api/notification/self',
-    'http://10.0.0.7:5249/api/notification/view'
+    'https://attendancetracker120250516132844-bqheg0bkbff4bkb2.southeastasia-01.azurewebsites.net/api/notification/self',
+    'https://attendancetracker120250516132844-bqheg0bkbff4bkb2.southeastasia-01.azurewebsites.net/api/notification/view'
   ];
 
   // Check if request URL starts with any of the excluded URLs
